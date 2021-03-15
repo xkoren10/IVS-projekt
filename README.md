@@ -1,15 +1,13 @@
-Prostredi:
+Prostredie:
 
-Python
-
-
-Windows 64bit
+*Python*
+*Windows 64bit*
 
 Autori:
 
 *Matej Koreň, Matej Hložek a Marek Tišš*
 
-Nazev tymu:
+Názov týmu:
 
 *PyJaMa's*
 
