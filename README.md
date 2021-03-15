@@ -1,19 +1,19 @@
 Prostredi
----------
+Python
 
-Ubuntu 64bit
+
 Windows 64bit
 
 Autori
-------
+Matej Koreň, Matej Hložek a Marek Tišš
 
 Nazev tymu
-- xlogin01 jmeno prijmeni 
-- xlogin02 jmeno prijmeni 
-- xlogin03 jmeno prijmeni 
-- xlogin04 jmeno prijmeni 
+- xkoren10 jmeno prijmeni 
+- xhloze02 jmeno prijmeni 
+- xtissm00 jmeno prijmeni 
+
 
 Licence
--------
+GNU General Public Licence
 
-Tento program je poskytovan...
+Tento program je poskytovan. (asi)
