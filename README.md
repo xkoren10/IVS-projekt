@@ -7,11 +7,11 @@ Windows 64bit
 
 Autori:
 
-Matej Koreň, Matej Hložek a Marek Tišš
+*Matej Koreň, Matej Hložek a Marek Tišš*
 
 Nazev tymu:
 
-PyJaMa's
+*PyJaMa's*
 
 - xkoren10 jmeno prijmeni 
 - xhloze02 jmeno prijmeni 
