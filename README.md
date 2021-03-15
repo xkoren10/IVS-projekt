@@ -9,7 +9,10 @@ Autori:
 
 Matej Koreň, Matej Hložek a Marek Tišš
 
-Nazev tymu
+Nazev tymu:
+
+PyJaMa's
+
 - xkoren10 jmeno prijmeni 
 - xhloze02 jmeno prijmeni 
 - xtissm00 jmeno prijmeni 
