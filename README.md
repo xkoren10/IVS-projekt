@@ -11,9 +11,9 @@ Názov týmu:
 
 *PyJaMa's*
 
-- xkoren10 jmeno prijmeni 
-- xhloze02 jmeno prijmeni 
-- xtissm00 jmeno prijmeni 
+- xkoren10 Matej Koreň
+- xhloze02 Matej Hložek
+- xtissm00 Marek Tišš
 
 
 Licence
