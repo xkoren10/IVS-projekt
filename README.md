@@ -19,4 +19,4 @@ Názov týmu:
 Licence
 GNU General Public Licence
 
-Tento program je poskytovan. (asi)
+Tento program bude poskytovaný. (asi)
