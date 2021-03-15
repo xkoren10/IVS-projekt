@@ -5,7 +5,8 @@ Python
 
 Windows 64bit
 
-Autori
+Autori:
+
 Matej Koreň, Matej Hložek a Marek Tišš
 
 Nazev tymu
