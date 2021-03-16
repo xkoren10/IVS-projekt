@@ -1,1 +1,1 @@
-//Python cod
+//Python code
