@@ -1,62 +1,62 @@
-PyJaMa’s
+PyJaMaâ€™s
 -----------------------
-Dátum : 13.3.2021
+DÃ¡tum : 13.3.2021
 -----------------------
-Termíny
+TermÃ­ny
 -----------------------
-* 15.3. GitHub repozitár
-* 17.3. Plán
-* 27.3 Základná kostra projektu, testy, kninica
-* 3.4  Hlavné funkcie + základy GUI
-* 10.4 Previazanie GUI a kalkulaèky
+* 15.3. GitHub repozitÃ¡r
+* 17.3. PlÃ¡n
+* 27.3 ZÃ¡kladnÃ¡ kostra projektu, testy, kniÅ¾nica
+* 3.4  HlavnÃ© funkcie + zÃ¡klady GUI
+* 10.4 Previazanie GUI a kalkulaÃ¨ky
 * 17.4 Profiling, testy
-* 24.4 Dokumentácia, manuál, readme, inštalátor/odinštalátor
-* 29.4 Posledné testy a ladenie, odovzdanie projektu + hodnoceni.txt
-* 21.5. Inštalácia + problemy.txt
-* 24.5. Prezentácia a obhajoba
+* 24.4 DokumentÃ¡cia, manuÃ¡l, readme, inÅ¡talÃ¡tor/odinÅ¡talÃ¡tor
+* 29.4 PoslednÃ© testy aÂ ladenie, odovzdanie projektu + hodnoceni.txt
+* 21.5. InÅ¡talÃ¡cia + problemy.txt
+* 24.5. PrezentÃ¡cia aÂ obhajoba
 -----------------------
-Pridelenie úloh
+Pridelenie Ãºloh
 -----------------------
-* Celı tím
-o  Dodriavanie dátumov
-o  Aktívna komunikácia
-o  Testovanie a inštalácia
-o  Code reviews
+* CelÃ½ tÃ­m
+o Â DodrÅ¾iavanie dÃ¡tumov
+o Â AktÃ­vna komunikÃ¡cia
+o Â Testovanie aÂ inÅ¡talÃ¡cia
+o Â Code reviews
 -----------------------
 * xkoren10
-o  Vytvorenie a správa repozitáru
-o  Kontrola dodriavania dátumov a správnos testov
-o  Dokumentácia v Doxygene
-o  Manuál
+o Â Vytvorenie a sprÃ¡va repozitÃ¡ru
+o Â Kontrola dodrÅ¾iavania dÃ¡tumov aÂ sprÃ¡vnosÂ testov
+o Â DokumentÃ¡cia vÂ Doxygene
+o  ManuÃ¡l
 o  Profiling
 -----------------------
 * xtissm00
-o  Kninica
-o  GUI
-o  Design
+o Â KniÅ¾nica
+o Â GUI
+o Â Design
 o  Mockup
 -----------------------
 * xhloze02
-o  Hlavnı kód
-o  Testy
-o  Inštalátor a odinštalátor
+o Â HlavnÃ½ kÃ³d
+o Â Testy
+o Â InÅ¡talÃ¡tor aÂ odinÅ¡talÃ¡tor
 o  Debugging
 -----------------------
 
 -----------------------
-Komunikácia
+KomunikÃ¡cia
 * Discord
 * Messenger
 * Issue tracking na GitHube
 -----------------------
-Pravidlá
-* Dodriavanie stanovenıch termínov
-* Vzájomná vıpomoc
-* Otvorená komunikácia
+PravidlÃ¡
+* DodrÅ¾iavanie stanovenÃ½ch termÃ­nov
+* VzÃ¡jomnÃ¡ vÃ½pomoc
+* OtvorenÃ¡ komunikÃ¡cia
 -----------------------
-Správa verzií
+SprÃ¡va verziÃ­
 * GitHub
-- prístup bol umonenı pre ivs.kontrola@gmail.com
-- https://github.com/xkoren10/IVS-projekt
+- prÃ­stup bol umoÅ¾nenÃ½ pre ivs.kontrola@gmail.com
+na adrese https://github.com/xkoren10/IVS-projekt
 -----------------------
-Jazyk dokumentácie - Anglickı
+Jazyk dokumentÃ¡cie - AnglickÃ½
