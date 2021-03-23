@@ -25,7 +25,7 @@ o  Code reviews
 -----------------------
 * xkoren10
 o  Vytvorenie a správa repozitáru
-o  Kontrola dodržiavania dátumov a správnos testov
+o  Kontrola dodržiavania dátumov a správnosť testov
 o  Dokumentácia v Doxygene
 o  Manuál
 o  Profiling
