@@ -1,6 +1,6 @@
 ## @file: Math_lib.py
 # @brief: Implementation of mathematical functions and constants
-# @autor: Marek Tiss, xtissm00, PyJaMa's
+# @author: Marek Tiss, xtissm00, PyJaMa's
 # @date: March 2021 
 
 
