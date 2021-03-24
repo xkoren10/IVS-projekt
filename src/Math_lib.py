@@ -3,7 +3,7 @@
 # @author: Marek Tiss, xtissm00, PyJaMa's
 # @date: March 2021 
 
-
+import math
 
 ## @var pi
 # Constant pi
@@ -71,7 +71,8 @@ def pow(x, n):
 def root(x, n):
     if (isinstance(n,int) and n >= 0):
         if ( x >= 0 or n % 2 == 1 ):
-            return round(n ** (1 / p), d_digits)
+            n = div(1.0,n)
+            return round(pow(x,n), d_digits)
         raise ValueError("Negative number can't have an even order of the root!")
     raise ValueError("Exponent must be natural number!")
 
@@ -83,12 +84,6 @@ def root(x, n):
 # @exception ValueError if x isn't natural number
 def fact(x):
     if (isinstance(x,int) and x > 0):
-        f = 1
-        for i in range(1, x+1):
-            f *= i
-        return round(f, d_digits)
-    
-    if x = 1:
-        return 1
+        return (math.factorial(x))
 
     raise ValueError("Exponent must be a natural number!")
