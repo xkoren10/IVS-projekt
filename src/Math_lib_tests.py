@@ -16,7 +16,7 @@ class TestAddition(unittest.TestCase):
         self.assertEqual(add(0, 0), 0)
 
         self.assertEqual(add(1, 1), 2)
-        self.assertEqual(add(5, 8), 12)
+        self.assertEqual(add(5, 8), 13)
         self.assertEqual(add(-6, 9), 3)
         self.assertEqual(add(-12, -8), -20)
 
@@ -46,7 +46,7 @@ class TestSubtraction(unittest.TestCase):
 
         self.assertEqual(sub(1, 1), 0)
         self.assertEqual(sub(5, 3), 2)
-        self.assertEqual(sub(-9, 6), -12)
+        self.assertEqual(sub(-9, 6), -15)
         self.assertEqual(sub(-5, -14), 9)
 
         self.assertNotEqual(sub(1, 1), 5)
@@ -90,22 +90,23 @@ class TestMultiplication(unittest.TestCase):
         self.assertNotEqual(mult(-7, -2), -14)
 
     def testFloat(self):
-        self.assertAlmostEqual(mult(8.4, 1.5), 12.6)
-        self.assertAlmostEqual(mult(4.7, 8.2), 38.54)
-        self.assertAlmostEqual(mult(-5.7, 0.2), -1.14)
-        self.assertAlmostEqual(mult(-9.2, -4.5), 41.4)
+        self.assertAlmostEqual(mult(8.4, 1.5), 12.6, places=2)
+        self.assertAlmostEqual(mult(4.7, 8.2), 38.54, places=2)
+        self.assertAlmostEqual(mult(-5.7, 0.2), -1.14, places=2)
+        self.assertAlmostEqual(mult(-9.2, -4.5), 41.4, places=2)
 
-        self.assertNotAlmostEqual(mult(0.1, 10.0), 5)
-        self.assertNotAlmostEqual(mult(5.9, 6.7), 0.2)
-        self.assertNotAlmostEqual(mult(-7.4, 5.9), 20.4)
-        self.assertNotAlmostEqual(mult(-3.4, -5.3), -15.5)
+        self.assertNotAlmostEqual(mult(0.1, 10.0), 5, places=2)
+        self.assertNotAlmostEqual(mult(5.9, 6.7), 0.2, places=2)
+        self.assertNotAlmostEqual(mult(-7.4, 5.9), 20.4, places=2)
+        self.assertNotAlmostEqual(mult(-3.4, -5.3), -15.5, places=2)
 
 
 """@brief: Tests for division function"""
 class TestDivision(unittest.TestCase):
     def testDivByZero(self):
-        self.assertRaises(div(5, 0))
-        self.assertRaises(div(5.0, 0))
+        with self.assertRaises(ZeroDivisionError):
+            div(5, 0)
+            div(7.3, 0)
 
     def testDivByOne(self):
         self.assertAlmostEqual(div(1, 1), 1)
@@ -121,17 +122,18 @@ class TestDivision(unittest.TestCase):
         self.assertAlmostEqual(div(-24, 8), -3.0)
         self.assertAlmostEqual(div(-50, -5), 10.0)
 
-        self.assertAlmostEqual(div(5.8, 2.2), 2.63)
-        self.assertAlmostEqual(div(5.2, 9.6), 0.5416)
-        self.assertAlmostEqual(div(-28.6, 8), -3.575)
-        self.assertAlmostEqual(div(-50.9, -4.3), 11.8372)
+        self.assertAlmostEqual(div(5.8, 2.2), 2.636363, places=4)
+        self.assertAlmostEqual(div(5.2, 9.6), 0.541666, places=4)
+        self.assertAlmostEqual(div(-28.6, 8), -3.575, places=4)
+        self.assertAlmostEqual(div(-50.9, -4.3), 11.837209, places=4)
 
 
 """@brief: Tests for power function"""
 class TestPower(unittest.TestCase):
     def testNotNaturalNumber(self):
-        self.assertRaises(pow(1, -5))
-        self.assertRaises(pow(1, 5.5))
+        with self.assertRaises(ValueError):
+            pow(1, -5)
+            pow(1, 5.5)
 
     def testIntegerByInteger(self):
         self.assertEqual(pow(5, 3), 125)
@@ -140,44 +142,47 @@ class TestPower(unittest.TestCase):
         self.assertEqual(pow(-3, 2), 9)
 
     def testFloatByInteger(self):
-        self.assertAlmostEqual(pow(2.5, 3), 15.625)
-        self.assertAlmostEqual(pow(-1.8, 5), -18.8956)
-        self.assertAlmostEqual(pow(6.8, 2), 46.24)
-        self.assertAlmostEqual(pow(-4.5, 4), 410.0625)
+        self.assertAlmostEqual(pow(2.5, 3), 15.625, places=2)
+        self.assertAlmostEqual(pow(-1.8, 5), -18.8956, places=2)
+        self.assertAlmostEqual(pow(6.8, 2), 46.24, places=2)
+        self.assertAlmostEqual(pow(-4.5, 4), 410.0625, places=2)
 
 
 """@brief: Tests for root function"""
 class TestRoot(unittest.TestCase):
     def testNotNaturalNumber(self):
-        self.assertRaises(root(1, -5))
-        self.assertRaises(root(1, 2.2))
+        with self.assertRaises(ValueError):
+            root(1, -5)
+            root(1, 2.2)
 
     def testNegativeNumber(self):
-        self.assertRaises(root(-5, 2))
-        self.assertRaises(root(-10, 4))
+        with self.assertRaises(ValueError):
+            root(-5, 2)
+            root(-10, 4)
 
     def testInteger(self):
-        self.assertAlmostEqual(root(10, 2), 3.1622)
-        self.assertAlmostEqual(root(42, 2), 6.4807)
-        self.assertAlmostEqual(root(-50, 3), -3.6840)
-        self.assertAlmostEqual(root(-23, 3), -2.8438)
+        self.assertAlmostEqual(root(10, 2), 3.1622, places=3)
+        self.assertAlmostEqual(root(42, 2), 6.4807, places=3)
+        self.assertAlmostEqual(root(-50, 3), -3.6840, places=3)
+        self.assertAlmostEqual(root(-23, 3), -2.8438, places=3)
         self.assertAlmostEqual(root(4096, 4), 8)
-        self.assertAlmostEqual(root(56, 3), 3.8258)
+        self.assertAlmostEqual(root(56, 3), 3.8258, places=3)
 
     def testFloat(self):
-        self.assertAlmostEqual(root(57.6, 2), 7.563)
-        self.assertAlmostEqual(root(152.7, 2), 12.3571)
-        self.assertAlmostEqual(root(-48.12, 3), -3.6372)
-        self.assertAlmostEqual(root(-999.65, 5), -3.9807)
-        self.assertAlmostEqual(root(1562, 4), 6.2866)
-        self.assertAlmostEqual(root(1285, 5), 4.1858)
+        self.assertAlmostEqual(root(57.6, 2), 7.563, places=2)
+        self.assertAlmostEqual(root(152.7, 2), 12.3571, places=3)
+        self.assertAlmostEqual(root(-48.12, 3), -3.6372, places=3)
+        self.assertAlmostEqual(root(-999.65, 5), -3.9807, places=3)
+        self.assertAlmostEqual(root(1562, 4), 6.2866, places=3)
+        self.assertAlmostEqual(root(1285, 5), 4.1858, places=3)
 
 
 """@brief: Tests for factorial function"""
 class TestFactorial(unittest.TestCase):
     def testNotNaturalNumber(self):
-        self.assertRaises(fact(-5))
-        self.assertRaises(fact(4.1))
+        with self.assertRaises(ValueError):
+            fact(-5)
+            fact(4.1)
 
     def testFactOfOne(self):
         self.assertEqual(fact(1), 1)
@@ -196,14 +201,14 @@ class TestSine(unittest.TestCase):
         self.assertAlmostEqual(sin(180), 0)
         self.assertAlmostEqual(sin(270), -1)
 
-        self.assertAlmostEqual(sin(15), 0.2588)
-        self.assertAlmostEqual(sin(200), -0.342)
-        self.assertAlmostEqual(sin(5000), -0.6427)
+        self.assertAlmostEqual(sin(15), 0.2588, places=3)
+        self.assertAlmostEqual(sin(200), -0.342, places=3)
+        self.assertAlmostEqual(sin(5000), -0.6427, places=3)
 
     def testFloat(self):
-        self.assertAlmostEqual(sin(80.5), 0.9862)
-        self.assertAlmostEqual(sin(126.1), 0.8079)
-        self.assertAlmostEqual(sin(352.7), -0.127)
+        self.assertAlmostEqual(sin(80.5), 0.9862, places=3)
+        self.assertAlmostEqual(sin(126.1), 0.8079, places=3)
+        self.assertAlmostEqual(sin(352.7), -0.127, places=3)
 
 
 """@brief: Tests for cosine function"""
@@ -214,21 +219,22 @@ class TestCosine(unittest.TestCase):
         self.assertAlmostEqual(cos(180), -1)
         self.assertAlmostEqual(cos(270), 0)
 
-        self.assertAlmostEqual(cos(35), 0.8191)
-        self.assertAlmostEqual(cos(153), -0.891)
-        self.assertAlmostEqual(cos(301), 0.515)
+        self.assertAlmostEqual(cos(35), 0.8191, places=3)
+        self.assertAlmostEqual(cos(153), -0.891, places=3)
+        self.assertAlmostEqual(cos(301), 0.515, places=3)
 
     def testFloat(self):
-        self.assertAlmostEqual(cos(111.52), -0.3668)
-        self.assertAlmostEqual(cos(205.14), -0.9052)
-        self.assertAlmostEqual(cos(98.9), -0.1547)
+        self.assertAlmostEqual(cos(111.52), -0.3668, places=3)
+        self.assertAlmostEqual(cos(205.14), -0.9052, places=3)
+        self.assertAlmostEqual(cos(98.9), -0.1547, places=3)
 
 
 """@brief: Tests for tangent function"""
 class TestTangent(unittest.TestCase):
     def testNotDefined(self):
-        self.assertRaises(tan(90))
-        self.assertRaises(tan(270))
+        with self.assertRaises(ValueError):
+            tan(90)
+            tan(270)
 
     def testInteger(self):
         self.assertAlmostEqual(tan(0), 0)
@@ -236,21 +242,22 @@ class TestTangent(unittest.TestCase):
         self.assertAlmostEqual(tan(45), 1)
         self.assertAlmostEqual(tan(135), -1)
 
-        self.assertAlmostEqual(tan(99), -6.3137)
-        self.assertAlmostEqual(tan(170), -0.1763)
-        self.assertAlmostEqual(tan(666), -1.3763)
+        self.assertAlmostEqual(tan(99), -6.3137, places=3)
+        self.assertAlmostEqual(tan(170), -0.1763, places=3)
+        self.assertAlmostEqual(tan(666), -1.3763, places=3)
 
     def testFloat(self):
-        self.assertAlmostEqual(tan(105.2), -3.6806)
-        self.assertAlmostEqual(tan(209.7), 0.5703)
-        self.assertAlmostEqual(tan(25.6), 0.4791)
+        self.assertAlmostEqual(tan(105.2), -3.6806, places=3)
+        self.assertAlmostEqual(tan(209.7), 0.5703, places=3)
+        self.assertAlmostEqual(tan(25.6), 0.4791, places=3)
 
 
 """@brief: Tests for cotangent function"""
-class TestTangent(unittest.TestCase):
+class TestCotangent(unittest.TestCase):
     def testNotDefined(self):
-        self.assertRaises(cotg(0))
-        self.assertRaises(cotg(180))
+        with self.assertRaises(ValueError):
+            cotg(0)
+            cotg(180)
 
     def testInteger(self):
         self.assertAlmostEqual(cotg(45), 1)
@@ -258,51 +265,51 @@ class TestTangent(unittest.TestCase):
         self.assertAlmostEqual(cotg(225), 1)
         self.assertAlmostEqual(cotg(315), -1)
 
-        self.assertAlmostEqual(cotg(221), 1.1503)
-        self.assertAlmostEqual(cotg(95), -0.0874)
-        self.assertAlmostEqual(cotg(72), 0.3249)
+        self.assertAlmostEqual(cotg(221), 1.1503, places=3)
+        self.assertAlmostEqual(cotg(95), -0.0874, places=3)
+        self.assertAlmostEqual(cotg(72), 0.3249, places=3)
 
     def testFloat(self):
-        self.assertAlmostEqual(cotg(320.6), -1.2174)
-        self.assertAlmostEqual(cotg(182.8), 20.4464)
-        self.assertAlmostEqual(cotg(82.5), 0.1316)
+        self.assertAlmostEqual(cotg(320.6), -1.2174, places=3)
+        self.assertAlmostEqual(cotg(182.8), 20.4464, places=3)
+        self.assertAlmostEqual(cotg(82.5), 0.1316, places=3)
 
 
 """@brief: Tests for constants in functions"""
 class TestConstants(unittest.TestCase):
     def testPi(self):
-        self.assertAlmostEqual(pi, 3.14159265359)
+        self.assertAlmostEqual(pi, 3.14159265359, places=6)
 
-        self.assertAlmostEqual(add(pi, 10), 31.4159265359)
-        self.assertAlmostEqual(sub(pi, 3), 0.14159265359)
+        self.assertAlmostEqual(add(pi, 10), 13.14159265359, places=4)
+        self.assertAlmostEqual(sub(pi, 3), 0.14159265359, places=4)
 
-        self.assertAlmostEqual(mult(pi, 2), 6.2831)
-        self.assertAlmostEqual(div(150, pi), 47.7464)
+        self.assertAlmostEqual(mult(pi, 2), 6.283185, places=4)
+        self.assertAlmostEqual(div(150, pi), 47.746482, places=4)
 
-        self.assertAlmostEqual(pow(pi, 2), 9.8696)
-        self.assertRaises(pow(5, pi))
+        self.assertAlmostEqual(pow(pi, 2), 9.869604, places=4)
+        self.assertAlmostEqual(root(pi, 2), 1.772453, places=4)
 
-        self.assertAlmostEqual(root(pi, 2), 1.7724)
-        self.assertRaises(root(5, pi))
-
-        self.assertRaises(fact(pi))
+        with self.assertRaises(ValueError):
+            pow(5, pi)
+            root(5, pi)
+            fact(pi)
 
     def testE(self):
-        self.assertAlmostEqual(e, 2.71828182846)
+        self.assertAlmostEqual(e, 2.71828182846, places=6)
 
-        self.assertAlmostEqual(add(e, 10), 27.1828182846)
-        self.assertAlmostEqual(sub(e, 2), 0.71828182846)
+        self.assertAlmostEqual(add(e, 10), 12.71828182846, places=4)
+        self.assertAlmostEqual(sub(e, 2), 0.71828182846, places=4)
 
-        self.assertAlmostEqual(mult(e, 2), 5.4365)
-        self.assertAlmostEqual(div(150, e), 55.1819)
+        self.assertAlmostEqual(mult(e, 2), 5.436563, places=4)
+        self.assertAlmostEqual(div(150, e), 55.181916, places=4)
 
-        self.assertAlmostEqual(pow(e, 2), 7.389)
-        self.assertRaises(pow(5, e))
+        self.assertAlmostEqual(pow(e, 2), 7.389056, places=3)
+        self.assertAlmostEqual(root(e, 2), 1.648721, places=4)
 
-        self.assertAlmostEqual(root(e, 2), 1.6487)
-        self.assertRaises(root(5, e))
-
-        self.assertRaises(fact(e))
+        with self.assertRaises(ValueError):
+            pow(5, e)
+            root(5, e)
+            fact(e)
 
 
 if __name__ == '__main__':
