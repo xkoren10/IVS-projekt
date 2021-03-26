@@ -72,7 +72,10 @@ def root(x, n):
     if (isinstance(n,int) and n > 0):
         if ( x >= 0 or n % 2 == 1 ):
             n = div(1.0,n)
-            return (x ** n, d_digits)
+            if x >= 0:
+                return round((x ** n), d_digits)
+            else:
+                return round(-((-x)**n), d_digits)
         raise ValueError("Negative number can't have an even order of the root!")
     raise ValueError("Exponent must be natural number!")
 
