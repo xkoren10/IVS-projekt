@@ -10,8 +10,12 @@ import unittest
 from Math_lib import *
 
 
-"""@brief: Tests for addition function"""
+def test_ok(test_name: str):
+    print("Test {}: ok".format(test_name))
+
+
 class TestAddition(unittest.TestCase):
+    """@brief: Tests for addition function"""
     def testInteger(self):
         self.assertEqual(add(0, 0), 0)
 
@@ -24,6 +28,8 @@ class TestAddition(unittest.TestCase):
         self.assertNotEqual(add(7, 6), 15)
         self.assertNotEqual(add(-3, 8), 50)
         self.assertNotEqual(add(-9, -8), -25)
+
+        test_ok("Integer addition")
 
     def testFloat(self):
         self.assertAlmostEqual(add(0.0, 0.0), 0.0)
@@ -38,9 +44,11 @@ class TestAddition(unittest.TestCase):
         self.assertNotAlmostEqual(add(-25.5, 14.7), 50.9)
         self.assertNotAlmostEqual(add(-4.4, -27.2), 7.3)
 
+        test_ok("Float addition")
 
-"""@brief: Tests for subtraction function"""
+
 class TestSubtraction(unittest.TestCase):
+    """@brief: Tests for subtraction function"""
     def testInteger(self):
         self.assertEqual(sub(0, 0), 0)
 
@@ -53,6 +61,8 @@ class TestSubtraction(unittest.TestCase):
         self.assertNotEqual(sub(9, 2), 12)
         self.assertNotEqual(sub(-4, 12), 17)
         self.assertNotEqual(sub(-8, -7), 4)
+
+        test_ok("Integer subtraction")
 
     def testFloat(self):
         self.assertAlmostEqual(sub(0.0, 0.0), 0.0)
@@ -67,16 +77,22 @@ class TestSubtraction(unittest.TestCase):
         self.assertNotAlmostEqual(sub(-18.5, 2.8), 12.1)
         self.assertNotAlmostEqual(sub(-4.9, -9.6), -1.5)
 
+        test_ok("Float subtraction")
 
-"""@brief: Tests for multiplication function"""
+
 class TestMultiplication(unittest.TestCase):
+    """@brief: Tests for multiplication function"""
     def testMultByZero(self):
         self.assertEqual(mult(1457, 0), 0)
         self.assertAlmostEqual(mult(24.579, 0.0), 0.0)
 
+        test_ok("Multiply by zero")
+
     def testMultByOne(self):
         self.assertEqual(mult(5, 1), 5)
         self.assertEqual(mult(6.4, 1), 6.4)
+
+        test_ok("Multiply by one")
 
     def testInteger(self):
         self.assertEqual(mult(5, 5), 25)
@@ -89,6 +105,8 @@ class TestMultiplication(unittest.TestCase):
         self.assertNotEqual(mult(-9, 12), 16)
         self.assertNotEqual(mult(-7, -2), -14)
 
+        test_ok("Integer multiplication")
+
     def testFloat(self):
         self.assertAlmostEqual(mult(8.4, 1.5), 12.6, places=2)
         self.assertAlmostEqual(mult(4.7, 8.2), 38.54, places=2)
@@ -100,21 +118,29 @@ class TestMultiplication(unittest.TestCase):
         self.assertNotAlmostEqual(mult(-7.4, 5.9), 20.4, places=2)
         self.assertNotAlmostEqual(mult(-3.4, -5.3), -15.5, places=2)
 
+        test_ok("Float multiplication")
 
-"""@brief: Tests for division function"""
+
 class TestDivision(unittest.TestCase):
+    """@brief: Tests for division function"""
     def testDivByZero(self):
         with self.assertRaises(ZeroDivisionError):
             div(5, 0)
             div(7.3, 0)
 
+        test_ok("Division by zero")
+
     def testDivByOne(self):
         self.assertAlmostEqual(div(1, 1), 1)
         self.assertAlmostEqual(div(5, 1), 5)
 
+        test_ok("Division by one")
+
     def testDivBySameNum(self):
         self.assertAlmostEqual(div(9.5, 9.5), 1.0)
         self.assertAlmostEqual(div(45.1, 45.1), 1.0)
+
+        test_ok("Division by same number")
 
     def testFloat(self):
         self.assertAlmostEqual(div(5, 2), 2.5)
@@ -127,13 +153,17 @@ class TestDivision(unittest.TestCase):
         self.assertAlmostEqual(div(-28.6, 8), -3.575, places=4)
         self.assertAlmostEqual(div(-50.9, -4.3), 11.837209, places=4)
 
+        test_ok("Basic division")
 
-"""@brief: Tests for power function"""
+
 class TestPower(unittest.TestCase):
+    """@brief: Tests for power function"""
     def testNotNaturalNumber(self):
         with self.assertRaises(ValueError):
             pow(1, -5)
             pow(1, 5.5)
+
+        test_ok("Power with natural number exponent")
 
     def testIntegerByInteger(self):
         self.assertEqual(pow(5, 3), 125)
@@ -141,24 +171,32 @@ class TestPower(unittest.TestCase):
         self.assertEqual(pow(12, 2), 144)
         self.assertEqual(pow(-3, 2), 9)
 
+        test_ok("Power of integer with integer exponent")
+
     def testFloatByInteger(self):
         self.assertAlmostEqual(pow(2.5, 3), 15.625, places=2)
         self.assertAlmostEqual(pow(-1.8, 5), -18.8956, places=2)
         self.assertAlmostEqual(pow(6.8, 2), 46.24, places=2)
         self.assertAlmostEqual(pow(-4.5, 4), 410.0625, places=2)
 
+        test_ok("Power of float with integer exponent")
 
-"""@brief: Tests for root function"""
+
 class TestRoot(unittest.TestCase):
+    """@brief: Tests for root function"""
     def testNotNaturalNumber(self):
         with self.assertRaises(ValueError):
             root(1, -5)
             root(1, 2.2)
 
+        test_ok("Root with natural number exponent")
+
     def testNegativeNumber(self):
         with self.assertRaises(ValueError):
             root(-5, 2)
             root(-10, 4)
+
+        test_ok("Root of negative number")
 
     def testInteger(self):
         self.assertAlmostEqual(root(10, 2), 3.1622, places=3)
@@ -168,6 +206,8 @@ class TestRoot(unittest.TestCase):
         self.assertAlmostEqual(root(4096, 4), 8)
         self.assertAlmostEqual(root(56, 3), 3.8258, places=3)
 
+        test_ok("Integer root")
+
     def testFloat(self):
         self.assertAlmostEqual(root(57.6, 2), 7.563, places=2)
         self.assertAlmostEqual(root(152.7, 2), 12.3571, places=3)
@@ -176,25 +216,33 @@ class TestRoot(unittest.TestCase):
         self.assertAlmostEqual(root(1562, 4), 6.2866, places=3)
         self.assertAlmostEqual(root(1285, 5), 4.1858, places=3)
 
+        test_ok("Float root")
 
-"""@brief: Tests for factorial function"""
+
 class TestFactorial(unittest.TestCase):
+    """@brief: Tests for factorial function"""
     def testNotNaturalNumber(self):
         with self.assertRaises(ValueError):
             fact(-5)
             fact(4.1)
 
+        test_ok("Factorial of negative number")
+
     def testFactOfOne(self):
         self.assertEqual(fact(1), 1)
+
+        test_ok("Factorial of one")
 
     def testInteger(self):
         self.assertEqual(fact(3), 6)
         self.assertEqual(fact(5), 120)
         self.assertEqual(fact(7), 5040)
 
+        test_ok("Basic factorial")
 
-"""@brief: Tests for sine function"""
+
 class TestSine(unittest.TestCase):
+    """@brief: Tests for sine function"""
     def testInteger(self):
         self.assertAlmostEqual(sin(0), 0)
         self.assertAlmostEqual(sin(90), 1)
@@ -205,14 +253,18 @@ class TestSine(unittest.TestCase):
         self.assertAlmostEqual(sin(200), -0.342, places=3)
         self.assertAlmostEqual(sin(5000), -0.6427, places=3)
 
+        test_ok("Integer sine")
+
     def testFloat(self):
         self.assertAlmostEqual(sin(80.5), 0.9862, places=3)
         self.assertAlmostEqual(sin(126.1), 0.8079, places=3)
         self.assertAlmostEqual(sin(352.7), -0.127, places=3)
 
+        test_ok("Float sine")
 
-"""@brief: Tests for cosine function"""
+
 class TestCosine(unittest.TestCase):
+    """@brief: Tests for cosine function"""
     def testInteger(self):
         self.assertAlmostEqual(cos(0), 1)
         self.assertAlmostEqual(cos(90), 0)
@@ -223,18 +275,24 @@ class TestCosine(unittest.TestCase):
         self.assertAlmostEqual(cos(153), -0.891, places=3)
         self.assertAlmostEqual(cos(301), 0.515, places=3)
 
+        test_ok("Integer cosine")
+
     def testFloat(self):
         self.assertAlmostEqual(cos(111.52), -0.3668, places=3)
         self.assertAlmostEqual(cos(205.14), -0.9052, places=3)
         self.assertAlmostEqual(cos(98.9), -0.1547, places=3)
 
+        test_ok("Float cosine")
 
-"""@brief: Tests for tangent function"""
+
 class TestTangent(unittest.TestCase):
+    """@brief: Tests for tangent function"""
     def testNotDefined(self):
         with self.assertRaises(ValueError):
             tan(90)
             tan(270)
+
+        test_ok("Not defined values of tangent")
 
     def testInteger(self):
         self.assertAlmostEqual(tan(0), 0)
@@ -246,18 +304,24 @@ class TestTangent(unittest.TestCase):
         self.assertAlmostEqual(tan(170), -0.1763, places=3)
         self.assertAlmostEqual(tan(666), -1.3763, places=3)
 
+        test_ok("Integer tangent")
+
     def testFloat(self):
         self.assertAlmostEqual(tan(105.2), -3.6806, places=3)
         self.assertAlmostEqual(tan(209.7), 0.5703, places=3)
         self.assertAlmostEqual(tan(25.6), 0.4791, places=3)
 
+        test_ok("Float tangent")
 
-"""@brief: Tests for cotangent function"""
+
 class TestCotangent(unittest.TestCase):
+    """@brief: Tests for cotangent function"""
     def testNotDefined(self):
         with self.assertRaises(ValueError):
             cotg(0)
             cotg(180)
+
+        test_ok("Not defined values of cotangent")
 
     def testInteger(self):
         self.assertAlmostEqual(cotg(45), 1)
@@ -269,14 +333,18 @@ class TestCotangent(unittest.TestCase):
         self.assertAlmostEqual(cotg(95), -0.0874, places=3)
         self.assertAlmostEqual(cotg(72), 0.3249, places=3)
 
+        test_ok("Integer cotangent")
+
     def testFloat(self):
         self.assertAlmostEqual(cotg(320.6), -1.2174, places=3)
         self.assertAlmostEqual(cotg(182.8), 20.4464, places=3)
         self.assertAlmostEqual(cotg(82.5), 0.1316, places=3)
 
+        test_ok("Float cotangent")
 
-"""@brief: Tests for constants in functions"""
+
 class TestConstants(unittest.TestCase):
+    """@brief: Tests for constants in functions"""
     def testPi(self):
         self.assertAlmostEqual(pi, 3.14159265359, places=6)
 
@@ -294,6 +362,8 @@ class TestConstants(unittest.TestCase):
             root(5, pi)
             fact(pi)
 
+        test_ok("Constant pi")
+
     def testE(self):
         self.assertAlmostEqual(e, 2.71828182846, places=6)
 
@@ -310,6 +380,8 @@ class TestConstants(unittest.TestCase):
             pow(5, e)
             root(5, e)
             fact(e)
+
+        test_ok("Constant e")
 
 
 if __name__ == '__main__':
