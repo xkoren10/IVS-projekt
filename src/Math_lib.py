@@ -72,7 +72,10 @@ def root(x, n):
     if (isinstance(n,int) and n > 0):
         if ( x >= 0 or n % 2 == 1 ):
             n = div(1.0,n)
-            return (x ** n, d_digits)
+            if x >= 0:
+                return round((x ** n), d_digits)
+            else:
+                return round(-((-x)**n), d_digits)
         raise ValueError("Negative number can't have an even order of the root!")
     raise ValueError("Exponent must be natural number!")
 
@@ -87,3 +90,42 @@ def fact(x):
         return (math.factorial(x))
 
     raise ValueError("Exponent must be a natural number!")
+
+## Sine
+# @brief Calculates sine of number x (opposite/hypotenuse)
+# @param x Number in degrees
+# @return Sine of x
+def sin(x):
+    x = div(mult(x, pi), 180)
+    return round(math.sin(x), d_digits)
+
+## Cosine
+# @brief Calculates cosine of number x (adjacent/hypotenuse)
+# @param x Number in degrees
+# @return Cosine of x
+def cos(x):
+    x = div(mult(x, pi), 180)
+    return round(math.cos(x), d_digits)
+
+## Tangent
+# @brief Calculates tangent of number x (opposite/adjacent)
+# @param x Number in degrees
+# @return Tangent of x
+# @exception ValueError if x is 90 + 180*I, while I is whole number
+def tan(x):
+    if (x % 180 == 90 or x % 180 == -90):
+        raise ValueError("Tangent doesn't exist")
+
+    x= div(mult(x, pi), 180)
+    return round(math.tan(x), d_digits)
+
+## Cotangent
+# @brief Calculates cotangent of number x (adjacent/opposite)
+# @param x Number in degrees
+# @return coangent of x
+# @exception ValueError if x is 180*I, while I is whole number
+def cotg(x):
+    if (x % 180 == 0):
+        raise ValueError("Cotangent doesn't exist")
+
+    return round(tan(x)**-1, d_digits)
