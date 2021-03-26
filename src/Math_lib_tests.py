@@ -209,7 +209,7 @@ class TestRoot(unittest.TestCase):
         test_ok("Integer root")
 
     def testFloat(self):
-        self.assertAlmostEqual(root(57.6, 2), 7.563, places=2)
+        self.assertAlmostEqual(root(57.2, 2), 7.56306, places=2)
         self.assertAlmostEqual(root(152.7, 2), 12.3571, places=3)
         self.assertAlmostEqual(root(-48.12, 3), -3.6372, places=3)
         self.assertAlmostEqual(root(-999.65, 5), -3.9807, places=3)
