@@ -69,10 +69,10 @@ def pow(x, n):
 # @exception ValueError if n isn't natural number
 # @exception ValueError if x is negative and n is even
 def root(x, n):
-    if (isinstance(n,int) and n >= 0):
+    if (isinstance(n,int) and n > 0):
         if ( x >= 0 or n % 2 == 1 ):
             n = div(1.0,n)
-            return round(pow(x,n), d_digits)
+            return (x ** n, d_digits)
         raise ValueError("Negative number can't have an even order of the root!")
     raise ValueError("Exponent must be natural number!")
 
