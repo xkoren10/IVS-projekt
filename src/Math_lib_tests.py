@@ -251,7 +251,7 @@ class TestSine(unittest.TestCase):
 
         self.assertAlmostEqual(sin(15), 0.2588, places=3)
         self.assertAlmostEqual(sin(200), -0.342, places=3)
-        self.assertAlmostEqual(sin(5000), -0.6427, places=3)
+        self.assertAlmostEqual(sin(-5000), 0.6427, places=3)
 
         test_ok("Integer sine")
 
@@ -273,14 +273,14 @@ class TestCosine(unittest.TestCase):
 
         self.assertAlmostEqual(cos(35), 0.8191, places=3)
         self.assertAlmostEqual(cos(153), -0.891, places=3)
-        self.assertAlmostEqual(cos(301), 0.515, places=3)
+        self.assertAlmostEqual(cos(-301), 0.515, places=3)
 
         test_ok("Integer cosine")
 
     def testFloat(self):
         self.assertAlmostEqual(cos(111.52), -0.3668, places=3)
         self.assertAlmostEqual(cos(205.14), -0.9052, places=3)
-        self.assertAlmostEqual(cos(98.9), -0.1547, places=3)
+        self.assertAlmostEqual(cos(-98.9), -0.1547, places=3)
 
         test_ok("Float cosine")
 
@@ -302,7 +302,7 @@ class TestTangent(unittest.TestCase):
 
         self.assertAlmostEqual(tan(99), -6.3137, places=3)
         self.assertAlmostEqual(tan(170), -0.1763, places=3)
-        self.assertAlmostEqual(tan(666), -1.3763, places=3)
+        self.assertAlmostEqual(tan(-666), 1.3763, places=3)
 
         test_ok("Integer tangent")
 
@@ -331,7 +331,7 @@ class TestCotangent(unittest.TestCase):
 
         self.assertAlmostEqual(cotg(221), 1.1503, places=3)
         self.assertAlmostEqual(cotg(95), -0.0874, places=3)
-        self.assertAlmostEqual(cotg(72), 0.3249, places=3)
+        self.assertAlmostEqual(cotg(-72), -0.3249, places=3)
 
         test_ok("Integer cotangent")
 

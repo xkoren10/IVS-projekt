@@ -78,7 +78,7 @@ class TestGoniometric(unittest.TestCase):
         test_ok("Tangent")
 
     def testCotangent(self):
-        self.assertEqual(calc.evaluate("cotan(45)"), "1")
+        self.assertEqual(calc.evaluate("cotg(45)"), "1")
         test_ok("Cotangent")
 
 
