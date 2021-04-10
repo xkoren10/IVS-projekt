@@ -7,6 +7,7 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
     expression = "0"
     lbracket = 0
     rbracket = 0
+    equals = 0
 
     def __init__(self):
         super().__init__()
@@ -29,25 +30,29 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         self.pushButton_root.clicked.connect(self.root_pressed)
         self.pushButton_clear.clicked.connect(self.clear_pressed)
         self.pushButton_del.clicked.connect(self.del_pressed)
+        self.pushButton_eq.clicked.connect(self.equals_pressed)
 
-        self.pushButton_plus.clicked.connect(lambda: self.function_pressed(" + "))
-        self.pushButton_minus.clicked.connect(lambda: self.function_pressed(" - "))
-        self.pushButton_times.clicked.connect(lambda: self.function_pressed(" * "))
-        self.pushButton_divide.clicked.connect(lambda: self.function_pressed(" / "))
-        self.pushButton_pow.clicked.connect(lambda: self.function_pressed(" ^ "))
-        self.pushButton_nroot.clicked.connect(lambda: self.function_pressed(" √ "))
-        self.pushButton_factor.clicked.connect(lambda: self.function_pressed(" ! "))
+        self.pushButton_plus.clicked.connect(lambda: self.function_pressed("+ "))
+        self.pushButton_minus.clicked.connect(lambda: self.function_pressed("- "))
+        self.pushButton_times.clicked.connect(lambda: self.function_pressed("* "))
+        self.pushButton_divide.clicked.connect(lambda: self.function_pressed("/ "))
+        self.pushButton_pow.clicked.connect(lambda: self.function_pressed("^ "))
+        self.pushButton_nroot.clicked.connect(lambda: self.function_pressed("√ "))
+        self.pushButton_factor.clicked.connect(lambda: self.function_pressed("! "))
 
-        self.pushButton_lbracket.clicked.connect(lambda: self.bracket_pressed(" ( "))
-        self.pushButton_rbracket.clicked.connect(lambda: self.bracket_pressed(" ) "))
+        self.pushButton_lbracket.clicked.connect(lambda: self.bracket_pressed("( "))
+        self.pushButton_rbracket.clicked.connect(lambda: self.bracket_pressed(") "))
 
-        self.pushButton_sin.clicked.connect(lambda: self.trig_pressed(" sin( "))
-        self.pushButton_cos.clicked.connect(lambda: self.trig_pressed(" cos( "))
-        self.pushButton_tan.clicked.connect(lambda: self.trig_pressed(" tan( "))
-        self.pushButton_cotan.clicked.connect(lambda: self.trig_pressed(" cotan( "))
+        self.pushButton_sin.clicked.connect(lambda: self.trig_pressed("sin( "))
+        self.pushButton_cos.clicked.connect(lambda: self.trig_pressed("cos( "))
+        self.pushButton_tan.clicked.connect(lambda: self.trig_pressed("tan( "))
+        self.pushButton_cotan.clicked.connect(lambda: self.trig_pressed("cotan( "))
 
     def show_input(self):
         self.label_input.setText(self.expression.replace(' ', '') + ' ')
+        self.label_output.setText("")
+        self.equals = 0
+        self.error = 0
 
     def digit_pressed(self):
         button = self.sender()
@@ -55,7 +60,10 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         new_label = ""
         numbers = self.expression.split(' ')
         last = len(numbers) - 1
-        new_number = format(float(numbers[last] + button.text()), '.15g')
+        if numbers[last] == "0" or self.equals == 1:
+            new_number = button.text()
+        else:
+            new_number = numbers[last] + button.text()
 
         if last == 0:
             self.expression = new_number
@@ -67,6 +75,9 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         self.show_input()
 
     def decimal_pressed(self):
+        if self.equals == 1:
+            self.expression = "0"
+
         numbers = self.expression.split(' ')
         last = len(numbers) - 1
         if (numbers[last] != "") and (numbers[last].find('.') == -1):
@@ -74,14 +85,23 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
             self.show_input()
 
     def function_pressed(self, funct):
+        if self.expression[-1] != " ":
+            self.expression = self.expression + " "
         self.expression = self.expression + funct
         self.show_input()
 
     def bracket_pressed(self, funct):
-        if funct == " ( ":
+
+        if self.equals == 1:
+            self.expression = "0"
+
+        if funct == "( ":
             self.lbracket += 1
         else:
             self.rbracket += 1
+
+        if self.expression[-1] != " ":
+            self.expression = self.expression + " "
 
         if self.expression == "0":
             self.expression = funct
@@ -90,18 +110,31 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         self.show_input()
 
     def root_pressed(self):
+        if self.equals == 1:
+            self.expression = "0"
+
+        if self.expression[-1] != " ":
+            self.expression = self.expression + " "
+
         if self.expression == "0":
-            self.expression = " 2√ "
+            self.expression = "2√ "
         else:
-            self.expression = self.expression + " 2√ "
+            self.expression = self.expression + "2√ "
         self.show_input()
 
     def trig_pressed(self, funct):
+        if self.equals == 1:
+            self.expression = "0"
+
         self.lbracket += 1
-        if self.expression == "0":
+        if self.expression[-1] != " ":
+            self.expression = self.expression + " "
+
+        if self.expression == "0 ":
             self.expression = funct
         else:
             self.expression = self.expression + funct
+
         self.show_input()
 
     def clear_pressed(self):
@@ -114,10 +147,27 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         if numbers[last] == '':
             self.expression = ''
             for i in range(0, last - 1):
-                self.expression = self.expression + " " + numbers[i]
+                if self.expression == "":
+                    self.expression = numbers[i]
+                else:
+                    self.expression = self.expression + " " + numbers[i]
         else:
             self.expression = self.expression[:-1]
         if self.expression == '':
             self.expression = "0"
         self.show_input()
+
+    def equals_pressed(self):
+        error = 0
+        if self.lbracket == self.rbracket:
+            result = "PLACEHOLDER"           ## Here sends equation to processing unit
+        else:
+            error = 1
+            result = "Syntax error"
+        self.expression = result
+        self.label_output.setText(result + " ")
+        if error == 0:
+            self.equals = 1
+
+
 
