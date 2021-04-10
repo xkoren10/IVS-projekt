@@ -1,5 +1,7 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtGui
+from PyQt5.Qt import Qt
 from calcules_Ui import Ui_Calculator
+
 
 
 class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
@@ -13,18 +15,20 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         super().__init__()
         self.setupUi(self)
         self.show()
+        self.setWindowTitle("Calcules")
+        self.setWindowIcon(QtGui.QIcon('logo.ico'))
         self.label_input.setText("0 ")
 
-        self.pushButton_0.clicked.connect(self.digit_pressed)
-        self.pushButton_1.clicked.connect(self.digit_pressed)
-        self.pushButton_2.clicked.connect(self.digit_pressed)
-        self.pushButton_3.clicked.connect(self.digit_pressed)
-        self.pushButton_4.clicked.connect(self.digit_pressed)
-        self.pushButton_5.clicked.connect(self.digit_pressed)
-        self.pushButton_6.clicked.connect(self.digit_pressed)
-        self.pushButton_7.clicked.connect(self.digit_pressed)
-        self.pushButton_8.clicked.connect(self.digit_pressed)
-        self.pushButton_9.clicked.connect(self.digit_pressed)
+        self.pushButton_0.clicked.connect(lambda: self.digit_pressed("0"))
+        self.pushButton_1.clicked.connect(lambda: self.digit_pressed("1"))
+        self.pushButton_2.clicked.connect(lambda: self.digit_pressed("2"))
+        self.pushButton_3.clicked.connect(lambda: self.digit_pressed("3"))
+        self.pushButton_4.clicked.connect(lambda: self.digit_pressed("4"))
+        self.pushButton_5.clicked.connect(lambda: self.digit_pressed("5"))
+        self.pushButton_6.clicked.connect(lambda: self.digit_pressed("6"))
+        self.pushButton_7.clicked.connect(lambda: self.digit_pressed("7"))
+        self.pushButton_8.clicked.connect(lambda: self.digit_pressed("8"))
+        self.pushButton_9.clicked.connect(lambda: self.digit_pressed("9"))
 
         self.pushButton_decimal.clicked.connect(self.decimal_pressed)
         self.pushButton_root.clicked.connect(self.root_pressed)
@@ -48,22 +52,91 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         self.pushButton_tan.clicked.connect(lambda: self.trig_pressed("tan( "))
         self.pushButton_cotan.clicked.connect(lambda: self.trig_pressed("cotan( "))
 
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_0:
+            self.digit_pressed("0")
+        
+        elif event.key() == Qt.Key_1:
+            self.digit_pressed("1")
+        
+        elif event.key() == Qt.Key_2:
+            self.digit_pressed("2")
+        
+        elif event.key() == Qt.Key_3:
+            self.digit_pressed("3")
+        
+        elif event.key() == Qt.Key_4:
+            self.digit_pressed("4")
+        
+        elif event.key() == Qt.Key_5:
+            self.digit_pressed("5")
+        
+        elif event.key() == Qt.Key_6:
+            self.digit_pressed("6")
+        
+        elif event.key() == Qt.Key_7:
+            self.digit_pressed("7")
+        
+        elif event.key() == Qt.Key_8:
+            self.digit_pressed("8")
+        
+        elif event.key() == Qt.Key_9:
+            self.digit_pressed("9")
+        
+        elif event.key() == Qt.Key_Plus:
+            self.function_pressed("+ ")
+        
+        elif event.key() == Qt.Key_Minus:
+            self.function_pressed("- ")
+
+        elif event.key() == Qt.Key_Slash:
+            self.function_pressed("/ ")
+        
+        elif event.key() == Qt.Key_Asterisk:
+            self.function_pressed("* ")
+
+        elif event.key() == Qt.Key_Exclam:
+            self.function_pressed("! ")
+        
+        elif event.key() == Qt.Key_AsciiCircum:
+            self.function_pressed("^ ")
+
+        elif event.key() == Qt.Key_ParenLeft:
+            self.bracket_pressed("( ")
+
+        elif event.key() == Qt.Key_ParenRight:
+            self.bracket_pressed(") ")
+        
+        elif event.key() == Qt.Key_Backspace:
+            self.del_pressed()
+        
+        elif event.key() == Qt.Key_C:
+            self.clear_pressed()
+        
+        elif event.key() == Qt.Key_Enter:
+            self.equals_pressed()
+        
+        elif event.key() == Qt.Key_Comma:
+            self.decimal_pressed()
+        
+        elif event.key() == Qt.Key_Period:
+            self.decimal_pressed()
+        
+
     def show_input(self):
         self.label_input.setText(self.expression.replace(' ', '') + ' ')
         self.label_output.setText("")
         self.equals = 0
         self.error = 0
 
-    def digit_pressed(self):
-        button = self.sender()
-
+    def digit_pressed(self, digit):
         new_label = ""
         numbers = self.expression.split(' ')
         last = len(numbers) - 1
         if numbers[last] == "0" or self.equals == 1:
-            new_number = button.text()
+            new_number = digit
         else:
-            new_number = numbers[last] + button.text()
+            new_number = numbers[last] + digit
 
         if last == 0:
             self.expression = new_number
@@ -103,7 +176,7 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         if self.expression[-1] != " ":
             self.expression = self.expression + " "
 
-        if self.expression == "0":
+        if self.expression == "0 ":
             self.expression = funct
         else:
             self.expression = self.expression + funct
@@ -116,7 +189,7 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         if self.expression[-1] != " ":
             self.expression = self.expression + " "
 
-        if self.expression == "0":
+        if self.expression == "0 ":
             self.expression = "2√ "
         else:
             self.expression = self.expression + "2√ "
