@@ -17,43 +17,43 @@ class TestBasics(unittest.TestCase):
     """@brief: Tests for basic calculations with one kind of operators"""
     def testOneNumber(self):
         self.assertEqual(calc.evaluate("1"), "1")
-        self.assertEqual(calc.evaluate("150.7"), "150.7")
+        self.assertAlmostEqual(float(calc.evaluate("150.7")), 150.7)
 
         test_ok("One Number")
 
     def testAdd(self):
         self.assertEqual(calc.evaluate("1+2+3+4+5"), "15")
-        self.assertEqual(calc.evaluate("4.5+8.65+7.23"), "20.38")
+        self.assertAlmostEqual(float(calc.evaluate("4.5+8.65+7.23")), 20.38)
 
         test_ok("Basic addition")
 
     def testSub(self):
         self.assertEqual(calc.evaluate("10-7-1"), "2")
-        self.assertEqual(calc.evaluate("-2.4-4.7-1.1-5.3"), "-13.5")
+        self.assertAlmostEqual(float(calc.evaluate("-2.4-4.7-1.1-5.3")), -13.5)
 
         test_ok("Basic subtraction")
 
     def testMultiplication(self):
         self.assertEqual(calc.evaluate("5*2*-7"), "-70")
-        self.assertEqual(calc.evaluate("1.1*4.3*3.6"), "17.028")
+        self.assertAlmostEqual(float(calc.evaluate("1.1*4.3*3.6")), 17.028)
 
         test_ok("Basic Multiplication")
 
     def testDivision(self):
-        self.assertEqual(calc.evaluate("150/8/3"), "6.25")
-        self.assertEqual(calc.evaluate("858.0/2.5/1.5"), "228.8")
+        self.assertAlmostEqual(float(calc.evaluate("150/8/3")), 6.25)
+        self.assertAlmostEqual(float(calc.evaluate("858.0/2.5/1.5")), 228.8)
 
         test_ok("Basic division")
 
     def testPower(self):
         self.assertEqual(calc.evaluate("5^2"), "25")
-        self.assertEqual(calc.evaluate("5.2^3"), "140.608")
+        self.assertAlmostEqual(float(calc.evaluate("5.2^3")), 140.608)
 
         test_ok("Basic power")
 
     def testRoot(self):
         self.assertEqual(calc.evaluate("√9"), "3")
-        self.assertEqual(calc.evaluate("√30.25"), "5.5")
+        self.assertAlmostEqual(float(calc.evaluate("√30.25")), 5.5)
 
         test_ok("Basic root")
 
@@ -88,9 +88,9 @@ class TestMultipleOperators(unittest.TestCase):
         self.assertEqual(calc.evaluate("2+2-8"), "-4")
         self.assertEqual(calc.evaluate("-5+7-2+1"), "1")
         self.assertEqual(calc.evaluate("2*5+9-4"), "15")
-        self.assertEqual(calc.evaluate("8+3-5*3.5"), "-6.5")
-        self.assertEqual(calc.evaluate("94/2+5-9.2"), "64.5")
-        self.assertEqual(calc.evaluate("5*6/8+5"), "8.75")
+        self.assertAlmostEqual(float(calc.evaluate("8+3-5*3.5")), -6.5)
+        self.assertAlmostEqual(float(calc.evaluate("94/2+5-9.2")), 64.5)
+        self.assertAlmostEqual(float(calc.evaluate("5*6/8+5")), 8.75)
         self.assertEqual(calc.evaluate("2-7*4+9.6/3"), "-23")
 
     test_ok("Multiple basic operators")
@@ -107,9 +107,9 @@ class TestMultipleOperators(unittest.TestCase):
 class TestParentheses(unittest.TestCase):
     """@brief: Tests for calculations with parentheses"""
     def testBasicOperators(self):
-        self.assertEqual(calc.evaluate("3*(2+4-1)/2"), "7.5")
-        self.assertEqual(calc.evaluate("-4(4/5+2)"), "-11.2")
-        self.assertEqual(calc.evaluate("(2+6*2)+(2/4+5"), "19.5")
+        self.assertAlmostEqual(float(calc.evaluate("3*(2+4-1)/2")), 7.5)
+        self.assertAlmostEqual(float(calc.evaluate("-4(4/5+2)")), -11.2)
+        self.assertAlmostEqual(float(calc.evaluate("(2+6*2)+(2/4+5")), 19.5)
         self.assertEqual(calc.evaluate("(5+7+3+9)/(2^2)"), "6")
         self.assertEqual(calc.evaluate("(1+(1+2)+2)+3"), "9")
         self.assertEqual(calc.evaluate("4/(1+6-3"), "1")
@@ -122,7 +122,7 @@ class TestParentheses(unittest.TestCase):
         self.assertEqual(calc.evaluate("3√(3*3+30-12)"), "3")
         self.assertEqual(calc.evaluate("(9*100+6*10+10-10)/5!"), "8")
         self.assertEqual(calc.evaluate("(5*5/10*2)^(5-3*2+6)"), "3125")
-        self.assertEqual(calc.evaluate("(9*(5^2-10)/9)/2"), "7.5")
+        self.assertAlmostEqual(float(calc.evaluate("(9*(5^2-10)/9)/2")), 7.5)
 
         test_ok("Advanced parentheses")
 
