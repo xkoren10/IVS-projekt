@@ -5,6 +5,7 @@
 @date: March/April 2021
 """
 import Math_lib as Math
+signs = ["+", "-", "*", "/"]
 
 
 def get_pars(eq: str):
@@ -34,10 +35,10 @@ def get_pars(eq: str):
         i += 1
 
 
-def rewrite(eq: str, index: int, insert):
+def rewrite(eq: list, index: int, insert):
     """rewrite
     @brief: Reconstructs the list with result of calculation
-    @type eq: String or list
+    @type eq: List
     @param eq: A list to reconstruct
     @type index: Integer
     @param index: Index where should the variable "insert" should be inserted
@@ -60,7 +61,6 @@ def to_list(eq: str):
     @rtype: List
     @return: A list of numbers and operators"""
 
-    signs = ["+", "-", "*", "/"]
     num = " "
     final = []
     i = 1
@@ -75,6 +75,26 @@ def to_list(eq: str):
                 final.append(num.strip())
         i += 1
     eq = final
+    return eq
+
+
+def check_neg(eq: str):
+    """check_neg
+    @brief: Checks if input variable does include negative number and repairs it
+    @type eq: String or list
+    @param eq: A iterable variable to be checked
+    @rtype: String or list
+    @return: A repaired (if needed) list with corrected negative numbers"""
+
+    i = 0
+    for elem in eq:
+        if elem is None or elem == "" or elem in signs:
+            if eq[i+1] == "-":
+                num = type_check(eq[i+2])*(-1)
+                del eq[i+1]
+                del eq[i]
+                eq[i] = num
+        i += 1
     return eq
 
 
@@ -126,6 +146,7 @@ def calculate(eq: str):
         eq = eq[:x] + str(calculate(eq[(x + 1): y])[0]) + eq[y + 1:]
 
     eq = to_list(eq)
+    eq = check_neg(eq)
     index = 0
     while "+" in eq or "-" in eq or "*" in eq or "/" in eq:
         if "*" in eq:
@@ -142,18 +163,19 @@ def calculate(eq: str):
             res = Math.div(num1, num2)
             eq = rewrite(eq, index, res)
 
+        elif "-" in eq:
+            index = findC(eq, "-")
+            eq[index] = "+"
+            num = type_check(eq[index + 1]) * (-1)
+            eq[index + 1] = num
+
         elif "+" in eq:
             index = findC(eq, "+")
             num1 = type_check(eq[index - 1])
+            if num1 is None:
+                num1 = 0
             num2 = type_check(eq[index + 1])
             res = Math.add(num1, num2)
-            eq = rewrite(eq, index, res)
-
-        elif "-" in eq:
-            index = findC(eq, "-")
-            num1 = type_check(eq[index - 1])
-            num2 = type_check(eq[index + 1])
-            res = Math.sub(num1, num2)
             eq = rewrite(eq, index, res)
 
     return str(eq[0])
