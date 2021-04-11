@@ -108,7 +108,7 @@ class TestParentheses(unittest.TestCase):
     """@brief: Tests for calculations with parentheses"""
     def testBasicOperators(self):
         self.assertAlmostEqual(float(calc.evaluate("3*(2+4-1)/2")), 7.5)
-        self.assertAlmostEqual(float(calc.evaluate("-4(4/5+2)")), -11.2)
+        self.assertAlmostEqual(float(calc.evaluate("-4*(4/5+2)")), -11.2)
         self.assertAlmostEqual(float(calc.evaluate("(2+6*2)+(2/4+5")), 19.5)
         self.assertEqual(calc.evaluate("(5+7+3+9)/(2^2)"), "6")
         self.assertEqual(calc.evaluate("(1+(1+2)+2)+3"), "9")
