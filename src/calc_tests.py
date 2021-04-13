@@ -52,7 +52,7 @@ class TestBasics(unittest.TestCase):
         test_ok("Basic power")
 
     def testRoot(self):
-        self.assertEqual(calc.evaluate("√9"), "3")
+        self.assertEqual(calc.evaluate("2√9"), "3")
         self.assertAlmostEqual(float(calc.evaluate("√30.25")), 5.5)
 
         test_ok("Basic root")
@@ -96,10 +96,10 @@ class TestMultipleOperators(unittest.TestCase):
     test_ok("Multiple basic operators")
 
     def testAdvancedOperators(self):
-        self.assertEqual(calc.evaluate("√16+5-4*2"), "1")
+        self.assertEqual(calc.evaluate("2√16+5-4*2"), "1")
         self.assertEqual(calc.evaluate("5!/10+5*1"), "17")
         self.assertEqual(calc.evaluate("2^2*2+2/2"), "9")
-        self.assertEqual(calc.evaluate("√4^4+2"), "18")
+        self.assertEqual(calc.evaluate("2√4^4+2"), "18")
 
     test_ok("Multiple advanced operators")
 
@@ -118,7 +118,7 @@ class TestParentheses(unittest.TestCase):
 
     def testAdvancedOperators(self):
         self.assertEqual(calc.evaluate("2^(1+2/2+2)"), "16")
-        self.assertEqual(calc.evaluate("√(5+3-2*2)"), "2")
+        self.assertEqual(calc.evaluate("2√(5+3-2*2)"), "2")
         self.assertEqual(calc.evaluate("3√(3*3+30-12)"), "3")
         self.assertEqual(calc.evaluate("(9*100+6*10+10-10)/5!"), "8")
         self.assertEqual(calc.evaluate("(5*5/10*2)^(5-3*2+6)"), "3125")
