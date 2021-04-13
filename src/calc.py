@@ -5,7 +5,7 @@
 @date: March/April 2021
 """
 import Math_lib as Math
-signs = ["+", "-", "*", "/"]
+signs = ["+", "-", "*", "/", "^", "√"]  # array with sign characters
 
 
 def get_pars(eq: str):
@@ -133,6 +133,21 @@ def findC(eq: str, sign: str):
         i += 1
 
 
+def defloat(num):
+    """defloat
+    @brief: Check if the number can be retyped to integer
+    @type num: Float or integer
+    @param num: A number to be checked
+    @rtype: String
+    @return: Either unchanged float number or integer number"""
+    if type(num) == float:
+        num = str(num)
+        if num[len(num)-1] == "0" and num[len(num)-2] == ".":
+            num = int(float(num))
+            return str(num)
+    return str(num)
+
+
 def calculate(eq: str):
     """calculate
     @brief: The main function to process given equation
@@ -148,8 +163,22 @@ def calculate(eq: str):
     eq = to_list(eq)
     eq = check_neg(eq)
     index = 0
-    while "+" in eq or "-" in eq or "*" in eq or "/" in eq:
-        if "*" in eq:
+    while "+" in eq or "-" in eq or "*" in eq or "/" in eq or "^" in eq or "√" in eq:
+        if "^" in eq:
+            index = findC(eq, "^")
+            num1 = type_check(eq[index-1])
+            num2 = type_check(eq[index+1])
+            res = Math.pow(num1, num2)
+            eq = rewrite(eq, index, res)
+
+        elif "√" in eq:
+            index = findC(eq, "√")
+            num1 = type_check(eq[index - 1])
+            num2 = type_check(eq[index + 1])
+            res = Math.root(num2, num1)
+            eq = rewrite(eq, index, res)
+
+        elif "*" in eq:
             index = findC(eq, "*")
             num1 = type_check(eq[index - 1])
             num2 = type_check(eq[index + 1])
@@ -189,5 +218,6 @@ def evaluate(eq: str):
     @rtype: string
     @return: a result"""
 
-    eq = calculate(eq)
-    return str(eq)
+    eq = float(calculate(eq))
+    eq = defloat(eq)
+    return eq
