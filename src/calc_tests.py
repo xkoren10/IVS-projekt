@@ -130,16 +130,17 @@ class TestParentheses(unittest.TestCase):
 class TestErrors(unittest.TestCase):
     """@brief: Tests for error handling"""
     def testErrors(self):
-        self.assertEqual(calc.evaluate("5/0"), "Division by zero")
-        self.assertEqual(calc.evaluate("2^2.2"), "Power with wrong type of exponent")
-        self.assertEqual(calc.evaluate("2^-2"), "Power with wrong type of exponent")
-        self.assertEqual(calc.evaluate("-5√2"), "Root with wrong type of exponent")
-        self.assertEqual(calc.evaluate("2.2√2"), "Root with wrong type of exponent")
-        self.assertEqual(calc.evaluate("2√-4"), "Even order of root of negative number")
-        self.assertEqual(calc.evaluate("-5!"), "Wrong type of factorial")
-        self.assertEqual(calc.evaluate("4.5!"), "Wrong type of factorial")
-        self.assertEqual(calc.evaluate("tan(90)"), "Value not defined")
-        self.assertEqual(calc.evaluate("cotg(0)"), "Value not defined")
+        self.assertEqual(calc.evaluate("5/0"), "Math error")
+        self.assertEqual(calc.evaluate("2^2.2"), "Math error")
+        self.assertEqual(calc.evaluate("2^-2"), "Math error")
+        self.assertEqual(calc.evaluate("-5√2"), "Math error")
+        self.assertEqual(calc.evaluate("2.2√2"), "Math error")
+        self.assertEqual(calc.evaluate("2√-4"), "Math error")
+        self.assertEqual(calc.evaluate("-5!"), "Math error")
+        self.assertEqual(calc.evaluate("4.5!"), "Math error")
+        self.assertEqual(calc.evaluate("tan(90)"), "Math error")
+        self.assertEqual(calc.evaluate("cotg(0)"), "Math error")
+        self.assertEqual(calc.evaluate("5+(5+(5)"), "Math error")
 
         test_ok("Error handling")
 
