@@ -89,9 +89,9 @@ class TestMultipleOperators(unittest.TestCase):
         self.assertEqual(calc.evaluate("-5+7-2+1"), "1")
         self.assertEqual(calc.evaluate("2*5+9-4"), "15")
         self.assertAlmostEqual(float(calc.evaluate("8+3-5*3.5")), -6.5)
-        self.assertAlmostEqual(float(calc.evaluate("94/2+5-9.2")), 64.5)
+        self.assertAlmostEqual(float(calc.evaluate("94/2+5-9.2")), 42.8)
         self.assertAlmostEqual(float(calc.evaluate("5*6/8+5")), 8.75)
-        self.assertEqual(calc.evaluate("2-7*4+9.6/3"), "-23")
+        self.assertAlmostEqual(float(calc.evaluate("2-7*4+9.6/4")), -23.6)
 
     test_ok("Multiple basic operators")
 
@@ -109,10 +109,10 @@ class TestParentheses(unittest.TestCase):
     def testBasicOperators(self):
         self.assertAlmostEqual(float(calc.evaluate("3*(2+4-1)/2")), 7.5)
         self.assertAlmostEqual(float(calc.evaluate("-4*(4/5+2)")), -11.2)
-        self.assertAlmostEqual(float(calc.evaluate("(2+6*2)+(2/4+5")), 19.5)
+        self.assertAlmostEqual(float(calc.evaluate("(2+6*2)+(2/4+5)")), 19.5)
         self.assertEqual(calc.evaluate("(5+7+3+9)/(2^2)"), "6")
         self.assertEqual(calc.evaluate("(1+(1+2)+2)+3"), "9")
-        self.assertEqual(calc.evaluate("4/(1+6-3"), "1")
+        self.assertEqual(calc.evaluate("4/(1+6-3)"), "1")
 
         test_ok("Basic parentheses")
 
