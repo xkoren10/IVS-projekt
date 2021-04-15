@@ -5,7 +5,7 @@
 @date: March/April 2021
 """
 import Math_lib as Math
-signs = ["+", "-", "*", "/", "^", "√"]  # array with sign characters
+signs = ["+", "-", "*", "/", "^", "√", "!"]  # array with sign characters
 
 
 def get_pars(eq: str):
@@ -13,8 +13,8 @@ def get_pars(eq: str):
     @brief: Gets indexes of the largest couple of parentheses
     @type eq: String
     @param eq: A string to get indexes from
-    @rtype: List
-    @return: [index of 1st, index of 2nd] parentheses"""
+    @rtype: List or Error string
+    @return: [index of 1st, index of 2nd] parentheses or Error string"""
 
     front = 0
     end = 0
@@ -33,6 +33,8 @@ def get_pars(eq: str):
             else:
                 end += 1
         i += 1
+    if front != end:
+        return ["error", "error"]
 
 
 def rewrite(eq: list, index: int, insert):
@@ -78,23 +80,26 @@ def to_list(eq: str):
     return eq
 
 
-def check_neg(eq: str):
+def check_empty(eq: str):
     """check_neg
-    @brief: Checks if input variable does include negative number and repairs it
+    @brief: Checks if input variable does include empty string or an negative number and repairs it
     @type eq: String or list
     @param eq: A iterable variable to be checked
     @rtype: String or list
-    @return: A repaired (if needed) list with corrected negative numbers"""
+    @return: A repaired (if needed) list without empty strings and wrongly written negative numbers"""
 
     i = 0
-    for elem in eq:
-        if elem is None or elem == "" or elem in signs:
-            if eq[i+1] == "-":
-                num = type_check(eq[i+2])*(-1)
-                del eq[i+1]
-                del eq[i]
-                eq[i] = num
-        i += 1
+    if len(eq) > 2:
+        for elem in eq:
+            if elem is None or elem == "" or elem in signs:
+                if eq[i+1] == "-":
+                    num = type_check(eq[i+2])*(-1)
+                    del eq[i+1]
+                    del eq[i]
+                    eq[i] = num
+                if eq[i - 1] == "!":
+                    del eq[i]
+            i += 1
     return eq
 
 
@@ -158,13 +163,25 @@ def calculate(eq: str):
 
     while "(" in eq:
         x, y = get_pars(eq)
-        eq = eq[:x] + str(calculate(eq[(x + 1): y])[0]) + eq[y + 1:]
+        if x == "error" or y == "error":
+            return "error"
+        eq = eq[:x] + defloat(calculate(eq[(x + 1): y])) + eq[y + 1:]
 
     eq = to_list(eq)
-    eq = check_neg(eq)
+    eq = check_empty(eq)
     index = 0
-    while "+" in eq or "-" in eq or "*" in eq or "/" in eq or "^" in eq or "√" in eq:
-        if "^" in eq:
+    while "+" in eq or "-" in eq or "*" in eq or "/" in eq or "^" in eq or "√" in eq or "!" in eq:
+        if "error" in eq:
+            return "error"
+
+        elif "!" in eq:
+            index = findC(eq, "!")
+            num = type_check(eq[index - 1])
+            res = Math.fact(num)
+            eq[index - 1] = res
+            del eq[index]
+
+        elif "^" in eq:
             index = findC(eq, "^")
             num1 = type_check(eq[index-1])
             num2 = type_check(eq[index+1])
@@ -178,18 +195,18 @@ def calculate(eq: str):
             res = Math.root(num2, num1)
             eq = rewrite(eq, index, res)
 
+        elif "/" in eq:
+            index = findC(eq, "/")
+            eq[index] = "*"
+            num = type_check(eq[index + 1])
+            num = Math.div(1, num)
+            eq[index + 1] = num
+
         elif "*" in eq:
             index = findC(eq, "*")
             num1 = type_check(eq[index - 1])
             num2 = type_check(eq[index + 1])
             res = Math.mult(num1, num2)
-            eq = rewrite(eq, index, res)
-
-        elif "/" in eq:
-            index = findC(eq, "/")
-            num1 = type_check(eq[index - 1])
-            num2 = type_check(eq[index + 1])
-            res = Math.div(num1, num2)
             eq = rewrite(eq, index, res)
 
         elif "-" in eq:
@@ -216,8 +233,12 @@ def evaluate(eq: str):
     @type eq: string
     @param eq: String to calculate
     @rtype: string
-    @return: a result"""
+    @return: a result or an error string"""
 
     eq = float(calculate(eq))
+
+    if "error" == eq:
+        return "Math Error"
+
     eq = defloat(eq)
     return eq
