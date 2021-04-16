@@ -121,6 +121,32 @@ def type_check(num: str):
     return num
 
 
+def check_gon(eq):
+    """check_gon
+    @brief: Checks if there are goniometric functions in input variable and calculates them
+    @type eq: List
+    @param eq: A list to check
+    @rtype: List
+    @return: List without goniometric funcions"""
+    i = 0
+    for elem in eq:
+        if type(elem) == str:
+            if "sin" in elem:
+                num = float(elem[3:])
+                eq[i] = defloat(Math.sin(num))
+            elif "cos" in elem:
+                num = float(elem[3:])
+                eq[i] = defloat(Math.cos(num))
+            elif "tan" in elem:
+                num = float(elem[3:])
+                eq[i] = defloat(Math.tan(num))
+            elif "cotg" in elem:
+                num = float(elem[4:])
+                eq[i] = defloat(Math.cotg(num))
+        i += 1
+    return eq
+
+
 def findC(eq: str, sign: str):
     """findC
     @brief: Finds first occurrence of given variable
@@ -169,6 +195,7 @@ def calculate(eq: str):
 
     eq = to_list(eq)
     eq = check_empty(eq)
+    eq = check_gon(eq)
     index = 0
     while "+" in eq or "-" in eq or "*" in eq or "/" in eq or "^" in eq or "√" in eq or "!" in eq:
         if "error" in eq:
