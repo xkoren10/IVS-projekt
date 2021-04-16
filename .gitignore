@@ -27,3 +27,4 @@
 *.exe
 *.out
 *.app
+/src/__pycache__/Math_lib.cpython-38.pyc
