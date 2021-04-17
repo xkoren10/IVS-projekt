@@ -1,14 +1,15 @@
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.Qt import Qt
 from calcules_Ui import Ui_Calculator
+from PyQt5.QtWidgets import QMessageBox
 
 
 
 class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
 
     expression = "0"
-    lbracket = 0
-    rbracket = 0
+    lparen = 0
+    rparen = 0
     equals = 0
 
     def __init__(self):
@@ -44,13 +45,15 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         self.pushButton_nroot.clicked.connect(lambda: self.function_pressed("√ "))
         self.pushButton_factor.clicked.connect(lambda: self.function_pressed("! "))
 
-        self.pushButton_lbracket.clicked.connect(lambda: self.bracket_pressed("( "))
-        self.pushButton_rbracket.clicked.connect(lambda: self.bracket_pressed(") "))
+        self.pushButton_lparen.clicked.connect(lambda: self.paren_pressed("( "))
+        self.pushButton_rparen.clicked.connect(lambda: self.paren_pressed(") "))
 
         self.pushButton_sin.clicked.connect(lambda: self.trig_pressed("sin( "))
         self.pushButton_cos.clicked.connect(lambda: self.trig_pressed("cos( "))
         self.pushButton_tan.clicked.connect(lambda: self.trig_pressed("tan( "))
         self.pushButton_cotan.clicked.connect(lambda: self.trig_pressed("cotan( "))
+
+        self.pushButton_help.clicked.connect(self.help)
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_0:
@@ -102,10 +105,10 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
             self.function_pressed("^ ")
 
         elif event.key() == Qt.Key_ParenLeft:
-            self.bracket_pressed("( ")
+            self.paren_pressed("( ")
 
         elif event.key() == Qt.Key_ParenRight:
-            self.bracket_pressed(") ")
+            self.paren_pressed(") ")
         
         elif event.key() == Qt.Key_Backspace:
             self.del_pressed()
@@ -114,6 +117,9 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
             self.clear_pressed()
         
         elif event.key() == Qt.Key_Enter:
+            self.equals_pressed()
+
+        elif event.key() == Qt.Key_Return:
             self.equals_pressed()
         
         elif event.key() == Qt.Key_Comma:
@@ -163,15 +169,15 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         self.expression = self.expression + funct
         self.show_input()
 
-    def bracket_pressed(self, funct):
+    def paren_pressed(self, funct):
 
         if self.equals == 1:
             self.expression = "0"
 
         if funct == "( ":
-            self.lbracket += 1
+            self.lparen += 1
         else:
-            self.rbracket += 1
+            self.rparen += 1
 
         if self.expression[-1] != " ":
             self.expression = self.expression + " "
@@ -199,7 +205,7 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         if self.equals == 1:
             self.expression = "0"
 
-        self.lbracket += 1
+        self.lparen += 1
         if self.expression[-1] != " ":
             self.expression = self.expression + " "
 
@@ -232,15 +238,40 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
 
     def equals_pressed(self):
         error = 0
-        if self.lbracket == self.rbracket:
+        if self.lparen == self.rparen:
             result = "PLACEHOLDER"           ## Here sends equation to processing unit
-        else:
+            self.label_output.setText(result + " ")
             error = 1
-            result = "Syntax error"
-        self.expression = result
-        self.label_output.setText(result + " ")
+            if result != "Math Error":
+                self.expression = result
+                error = 0
+        else:
+            self.label_output.setText("Syntax Error ")
+            error = 1 
+        
         if error == 0:
             self.equals = 1
+
+    def help(self):
+        msg = QMessageBox()
+        msg.setWindowTitle("Help")
+        msg.setText("Calcules Manual")
+        msg.setIcon(QMessageBox.Information)
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.setDefaultButton(QMessageBox.Ok)
+        msg.setEscapeButton(QMessageBox.Ok)
+
+        msg.setInformativeText("Calcules is a simple calculator.\n"
+                               "You can press buttons on screen or on your keyboard to provide input.\n"
+                               "On keyboard you can use numbers,\n"
+                               ", or . as decimal point,\n"
+                               "+ - * / ! ^ for operations,\n"
+                               "( ) as parentheses,\n"
+                               "Backspace for deleting last input,\n"
+                               "C for clearing whole input,\n"
+                               "Enter or = for display the result.\n")
+        msg.setDetailedText("ADD MORE DETAILS")          #TODO
+        msg.exec_()
 
 
 
