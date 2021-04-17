@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets, QtGui
 from PyQt5.Qt import Qt
 from calcules_Ui import Ui_Calculator
 from PyQt5.QtWidgets import QMessageBox
+import calc
 
 
 
@@ -218,18 +219,24 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
 
     def clear_pressed(self):
         self.expression = "0"
+        self.rparen = 0
+        self.lparen = 0
         self.show_input()
 
     def del_pressed(self):
         numbers = self.expression.split(' ')
         last = len(numbers) - 1
+        if numbers[last - 1] == '(':
+            self.lparen -= 1
+        if numbers[last - 1] == ')':
+            self.rparen -= 1
         if numbers[last] == '':
             self.expression = ''
             for i in range(0, last - 1):
                 if self.expression == "":
-                    self.expression = numbers[i]
+                    self.expression = numbers[i] + " "
                 else:
-                    self.expression = self.expression + " " + numbers[i]
+                    self.expression = self.expression + numbers[i] + " "
         else:
             self.expression = self.expression[:-1]
         if self.expression == '':
@@ -237,20 +244,14 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         self.show_input()
 
     def equals_pressed(self):
-        error = 0
         if self.lparen == self.rparen:
-            result = "PLACEHOLDER"           ## Here sends equation to processing unit
+            result = calc.evaluate(self.expression)
             self.label_output.setText(result + " ")
-            error = 1
             if result != "Math Error":
                 self.expression = result
-                error = 0
+                self.equals = 1
         else:
             self.label_output.setText("Syntax Error ")
-            error = 1 
-        
-        if error == 0:
-            self.equals = 1
 
     def help(self):
         msg = QMessageBox()
