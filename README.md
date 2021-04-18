@@ -1,13 +1,20 @@
-Prostredie:
+#IVS projekt 2
 
+<div align="center">
+    <h1>Calcules</h1>
+    <p>
+    <img src="">
+    <br>
+    </p>
+</div>
+
+
+##Made with and for
 *Python*
 *Windows 64bit*
 
-Autori:
 
-*Matej Koreň, Matej Hložek a Marek Tišš*
-
-Názov týmu:
+##Authors
 
 *PyJaMa's*
 
@@ -16,7 +23,7 @@ Názov týmu:
 - xtissm00 Marek Tišš
 
 
-Licence
+##License
 GNU General Public Licence
 
-Tento program bude poskytovaný. (asi)
+
