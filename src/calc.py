@@ -89,17 +89,17 @@ def check_empty(eq: str):
     @return: A repaired (if needed) list without empty strings and wrongly written negative numbers"""
 
     i = 0
-    if len(eq) > 2:
-        for elem in eq:
-            if elem is None or elem == "" or elem in signs:
-                if eq[i+1] == "-":
-                    num = type_check(eq[i+2])*(-1)
-                    del eq[i+1]
+    for elem in eq:
+        if elem is None or elem == "" or elem in signs:
+            if len(eq) > i + 1:
+                if eq[i + 1] == "-":
+                    num = type_check(eq[i + 2]) * (-1)
+                    del eq[i + 1]
                     del eq[i]
                     eq[i] = num
                 if eq[i - 1] == "!":
                     del eq[i]
-            i += 1
+        i += 1
     return eq
 
 
