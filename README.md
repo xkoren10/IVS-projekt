@@ -1,4 +1,4 @@
-#IVS projekt 2
+# IVS projekt 2
 
 <div align="center">
     <h1>Calcules</h1>
@@ -9,13 +9,13 @@
 </div>
 
 
-Made with and for:
+## Made with and for:
 
 *Python*
 *Windows 64bit*
 
 
-Authors:
+## Authors:
 
 *PyJaMa's*
 
@@ -24,7 +24,7 @@ Authors:
 - xtissm00 Marek Tišš
 
 
-License:
+## License:
 
 GNU General Public Licence
 
