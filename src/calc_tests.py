@@ -53,7 +53,7 @@ class TestBasics(unittest.TestCase):
 
     def testRoot(self):
         self.assertEqual(calc.evaluate("2√9"), "3")
-        self.assertAlmostEqual(float(calc.evaluate("√30.25")), 5.5)
+        self.assertAlmostEqual(float(calc.evaluate("2√30.25")), 5.5)
 
         test_ok("Basic root")
 
@@ -130,17 +130,17 @@ class TestParentheses(unittest.TestCase):
 class TestErrors(unittest.TestCase):
     """@brief: Tests for error handling"""
     def testErrors(self):
-        self.assertEqual(calc.evaluate("5/0"), "Math error")
-        self.assertEqual(calc.evaluate("2^2.2"), "Math error")
-        self.assertEqual(calc.evaluate("2^-2"), "Math error")
-        self.assertEqual(calc.evaluate("-5√2"), "Math error")
-        self.assertEqual(calc.evaluate("2.2√2"), "Math error")
-        self.assertEqual(calc.evaluate("2√-4"), "Math error")
-        self.assertEqual(calc.evaluate("-5!"), "Math error")
-        self.assertEqual(calc.evaluate("4.5!"), "Math error")
-        self.assertEqual(calc.evaluate("tan(90)"), "Math error")
-        self.assertEqual(calc.evaluate("cotg(0)"), "Math error")
-        self.assertEqual(calc.evaluate("5+(5+(5)"), "Math error")
+        self.assertEqual(calc.evaluate("5/0"), "Math Error")
+        self.assertEqual(calc.evaluate("2^2.2"), "Math Error")
+        self.assertEqual(calc.evaluate("2^-2"), "Math Error")
+        self.assertEqual(calc.evaluate("-5√2"), "Math Error")
+        self.assertEqual(calc.evaluate("2.2√2"), "Math Error")
+        self.assertEqual(calc.evaluate("2√-4"), "Math Error")
+        self.assertEqual(calc.evaluate("-5!"), "Math Error")
+        self.assertEqual(calc.evaluate("4.5!"), "Math Error")
+        self.assertEqual(calc.evaluate("tan(90)"), "Math Error")
+        self.assertEqual(calc.evaluate("cotg(0)"), "Math Error")
+        self.assertEqual(calc.evaluate("5+(5+(5)"), "Math Error")
 
         test_ok("Error handling")
 
