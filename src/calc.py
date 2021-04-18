@@ -186,72 +186,75 @@ def calculate(eq: str):
     @param eq: String to calculate
     @rtype: String
     @return: A result"""
+    try:
+        while "(" in eq:
+            x, y = get_pars(eq)
+            if x == "error" or y == "error":
+                return "error"
+            eq = eq[:x] + defloat(calculate(eq[(x + 1): y])) + eq[y + 1:]
 
-    while "(" in eq:
-        x, y = get_pars(eq)
-        if x == "error" or y == "error":
-            return "error"
-        eq = eq[:x] + defloat(calculate(eq[(x + 1): y])) + eq[y + 1:]
+        eq = to_list(eq)
+        eq = check_empty(eq)
+        eq = check_gon(eq)
+        index = 0
+        while "+" in eq or "-" in eq or "*" in eq or "/" in eq or "^" in eq or "√" in eq or "!" in eq:
+            if "error" in eq:
+                return "error"
 
-    eq = to_list(eq)
-    eq = check_empty(eq)
-    eq = check_gon(eq)
-    index = 0
-    while "+" in eq or "-" in eq or "*" in eq or "/" in eq or "^" in eq or "√" in eq or "!" in eq:
-        if "error" in eq:
-            return "error"
+            elif "!" in eq:
+                index = findC(eq, "!")
+                num = type_check(eq[index - 1])
+                res = Math.fact(num)
+                eq[index - 1] = res
+                del eq[index]
 
-        elif "!" in eq:
-            index = findC(eq, "!")
-            num = type_check(eq[index - 1])
-            res = Math.fact(num)
-            eq[index - 1] = res
-            del eq[index]
+            elif "^" in eq:
+                index = findC(eq, "^")
+                num1 = type_check(eq[index-1])
+                num2 = type_check(eq[index+1])
+                res = Math.pow(num1, num2)
+                eq = rewrite(eq, index, res)
 
-        elif "^" in eq:
-            index = findC(eq, "^")
-            num1 = type_check(eq[index-1])
-            num2 = type_check(eq[index+1])
-            res = Math.pow(num1, num2)
-            eq = rewrite(eq, index, res)
+            elif "√" in eq:
+                index = findC(eq, "√")
+                num1 = type_check(eq[index - 1])
+                num2 = type_check(eq[index + 1])
+                res = Math.root(num2, num1)
+                eq = rewrite(eq, index, res)
 
-        elif "√" in eq:
-            index = findC(eq, "√")
-            num1 = type_check(eq[index - 1])
-            num2 = type_check(eq[index + 1])
-            res = Math.root(num2, num1)
-            eq = rewrite(eq, index, res)
+            elif "/" in eq:
+                index = findC(eq, "/")
+                eq[index] = "*"
+                num = type_check(eq[index + 1])
+                num = Math.div(1, num)
+                eq[index + 1] = num
 
-        elif "/" in eq:
-            index = findC(eq, "/")
-            eq[index] = "*"
-            num = type_check(eq[index + 1])
-            num = Math.div(1, num)
-            eq[index + 1] = num
+            elif "*" in eq:
+                index = findC(eq, "*")
+                num1 = type_check(eq[index - 1])
+                num2 = type_check(eq[index + 1])
+                res = Math.mult(num1, num2)
+                eq = rewrite(eq, index, res)
 
-        elif "*" in eq:
-            index = findC(eq, "*")
-            num1 = type_check(eq[index - 1])
-            num2 = type_check(eq[index + 1])
-            res = Math.mult(num1, num2)
-            eq = rewrite(eq, index, res)
+            elif "-" in eq:
+                index = findC(eq, "-")
+                eq[index] = "+"
+                num = type_check(eq[index + 1]) * (-1)
+                eq[index + 1] = num
 
-        elif "-" in eq:
-            index = findC(eq, "-")
-            eq[index] = "+"
-            num = type_check(eq[index + 1]) * (-1)
-            eq[index + 1] = num
+            elif "+" in eq:
+                index = findC(eq, "+")
+                num1 = type_check(eq[index - 1])
+                if num1 is None:
+                    num1 = 0
+                num2 = type_check(eq[index + 1])
+                res = Math.add(num1, num2)
+                eq = rewrite(eq, index, res)
 
-        elif "+" in eq:
-            index = findC(eq, "+")
-            num1 = type_check(eq[index - 1])
-            if num1 is None:
-                num1 = 0
-            num2 = type_check(eq[index + 1])
-            res = Math.add(num1, num2)
-            eq = rewrite(eq, index, res)
+        return str(eq[0])
 
-    return str(eq[0])
+    except:
+        return "error"
 
 
 def evaluate(eq: str):
@@ -262,10 +265,10 @@ def evaluate(eq: str):
     @rtype: string
     @return: a result or an error string"""
 
-    eq = float(calculate(eq))
+    eq = calculate(eq)
 
     if "error" == eq:
         return "Math Error"
 
-    eq = defloat(eq)
+    eq = defloat(float(eq))
     return eq
