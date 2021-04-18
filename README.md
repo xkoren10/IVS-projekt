@@ -3,18 +3,19 @@
 <div align="center">
     <h1>Calcules</h1>
     <p>
-    <img src="">
+    <img src="herk_full.png">
     <br>
     </p>
 </div>
 
 
-##Made with and for
+Made with and for:
+
 *Python*
 *Windows 64bit*
 
 
-##Authors
+Authors:
 
 *PyJaMa's*
 
@@ -23,7 +24,8 @@
 - xtissm00 Marek Tišš
 
 
-##License
+License:
+
 GNU General Public Licence
 
 
