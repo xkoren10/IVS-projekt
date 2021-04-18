@@ -2,7 +2,7 @@
 @file: calc.py
 @brief: Processing script for computing the result of input
 @author: Matej Hložek, xhloze02, PyJaMa's
-@date: March/April 2021
+@date: March/April/May 2021
 """
 import Math_lib as Math
 signs = ["+", "-", "*", "/", "^", "√", "!"]  # array with sign characters
@@ -127,7 +127,7 @@ def check_gon(eq):
     @type eq: List
     @param eq: A list to check
     @rtype: List
-    @return: List without goniometric funcions"""
+    @return: List without goniometric functions"""
     i = 0
     for elem in eq:
         if type(elem) == str:
