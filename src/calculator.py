@@ -1,13 +1,12 @@
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.Qt import Qt
 from calcules_Ui import Ui_Calculator
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QDialog, QPushButton, QVBoxLayout, QLabel, QScrollArea, QWidget
 import calc
 
 
-
+history = ''
 class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
-
     expression = "0"
     lparen = 0
     rparen = 0
@@ -55,6 +54,7 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         self.pushButton_cotan.clicked.connect(lambda: self.trig_pressed("cotan( "))
 
         self.pushButton_help.clicked.connect(self.help)
+        self.pushButton_hist.clicked.connect(self.history)
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_0:
@@ -244,14 +244,17 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         self.show_input()
 
     def equals_pressed(self):
+        global history
         if self.lparen == self.rparen:
             result = calc.evaluate(self.expression)
             self.label_output.setText(result + " ")
+            history += self.expression.replace(' ', '') + '\n' + result + '\n\n'
             if result != "Math Error":
                 self.expression = result
                 self.equals = 1
         else:
             self.label_output.setText("Syntax Error ")
+            history += self.expression.replace(' ', '') + '\n' + "Syntax Error"+ '\n\n'
 
     def help(self):
         msg = QMessageBox()
@@ -273,6 +276,73 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
                                "Enter or = for display the result.\n")
         msg.setDetailedText("ADD MORE DETAILS")          #TODO
         msg.exec_()
+    
+    def history(self):
+        his = History()
+        his.exec_()
+           
+
+class ScrollLabel(QScrollArea):
+
+    def __init__(self, *args, **kwargs):
+        QScrollArea.__init__(self, *args, **kwargs)
+  
+        self.setWidgetResizable(True)
+  
+        content = QWidget(self)
+        self.setWidget(content)
+  
+        lay = QVBoxLayout(content)
+  
+        self.label = QLabel(content)
+  
+        self.label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+  
+        # making label multi-line
+        self.label.setWordWrap(True)
+  
+        # adding label to the layout
+        lay.addWidget(self.label)
+  
+    # the setText method
+    def setText(self, text):
+        # setting text to the label
+        self.label.setText(text)
+
+class History(QtWidgets.QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
+
+        self.setWindowTitle("History")
 
 
+        self.setGeometry(100, 100, 600, 400)
+        self.UiComponents()
+    
+        self.show()
+
+    def UiComponents(self):
+        
+        self.text = history
+  
+    
+        self.label = ScrollLabel(self)
+  
+        
+        self.label.setText(self.text)
+        self.label.setStyleSheet("font: 20pt;")
+  
+       
+        self.label.setGeometry(0, 0, 600, 400)
+
+        self.clear_button = QPushButton('Clear', self)
+        self.clear_button.move(515,370)
+    
+        self.clear_button.clicked.connect(self.on_click)
+
+    def on_click(self):
+        global history
+        history = ''
+        self.label.setText(history)
+        
 
