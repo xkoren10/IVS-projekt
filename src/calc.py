@@ -116,6 +116,7 @@ def type_check(num: str):
     elif type(num) is str:
         if "." in num:
             num = float(num)
+            num = defloat(num)
         else:
             num = int(num)
     return num
@@ -175,8 +176,11 @@ def defloat(num):
         num = str(num)
         if num[len(num)-1] == "0" and num[len(num)-2] == ".":
             num = int(float(num))
-            return str(num)
-    return str(num)
+            return num
+        else:
+            num = float(num)
+            return  num
+    return num
 
 
 def calculate(eq: str):
@@ -270,5 +274,5 @@ def evaluate(eq: str):
     if "error" == eq:
         return "Math Error"
 
-    eq = defloat(float(eq))
+    eq = str(defloat(float(eq)))
     return eq
