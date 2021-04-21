@@ -20,7 +20,7 @@ class Ui_Calculator(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setMaximumSize(QtCore.QSize(680, 600))
+        MainWindow.setFixedSize(QtCore.QSize(680, 600))
         MainWindow.setStyleSheet("    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
 "                                      stop: 0 #6a1b9a , stop: 1 #ab47bc);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
