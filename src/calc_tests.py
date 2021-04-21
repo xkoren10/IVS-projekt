@@ -119,8 +119,8 @@ class TestParentheses(unittest.TestCase):
     def testAdvancedOperators(self):
         self.assertEqual(calc.evaluate("2^(1+2/2+2)"), "16")
         self.assertEqual(calc.evaluate("2√(5+3-2*2)"), "2")
-        self.assertEqual(calc.evaluate("3√(3*3+30-12)"), "3")
-        self.assertEqual(calc.evaluate("(9*100+6*10+10-10)/5!"), "8")
+        self.assertAlmostEqual(float(calc.evaluate("3√(3*3+30-12)")), 3)
+        self.assertAlmostEqual(float(calc.evaluate("(9*100+6*10+10-10)/5!")), 8)
         self.assertEqual(calc.evaluate("(5*5/10*2)^(5-3*2+6)"), "3125")
         self.assertAlmostEqual(float(calc.evaluate("(9*(5^2-10)/9)/2")), 7.5)
 
@@ -147,4 +147,3 @@ class TestErrors(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-    print("All tests passed")
