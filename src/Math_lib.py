@@ -13,7 +13,7 @@ pi = 3.14159265359
 e = 2.71828182846
 ## @var d_digits
 # Number of decimal digits:
-d_digits = 10
+d_digits = 11
 
 ## Addition
 # @brief Adds 2 numbers together (x+y)
