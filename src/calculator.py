@@ -53,8 +53,8 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         self.pushButton_tan.clicked.connect(lambda: self.trig_pressed("tan( "))
         self.pushButton_cotan.clicked.connect(lambda: self.trig_pressed("cotan( "))
 
-        self.pushButton_help.clicked.connect(self.help)
-        self.pushButton_hist.clicked.connect(self.history)
+        self.pushButton_help.clicked.connect(self.help_window)
+        self.pushButton_hist.clicked.connect(self.history_window)
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_0:
@@ -256,9 +256,10 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
             self.label_output.setText("Syntax Error ")
             history += self.expression.replace(' ', '') + '\n' + "Syntax Error"+ '\n\n'
 
-    def help(self):
+    def help_window(self):
         msg = QMessageBox()
         msg.setWindowTitle("Help")
+        msg.setWindowIcon(QtGui.QIcon('logo.ico'))
         msg.setText("Calcules Manual")
         msg.setIcon(QMessageBox.Information)
         msg.setStandardButtons(QMessageBox.Ok)
@@ -277,66 +278,69 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         msg.setDetailedText("ADD MORE DETAILS")          #TODO
         msg.exec_()
     
-    def history(self):
+    def history_window(self):
         his = History()
         his.exec_()
            
 
 class ScrollLabel(QScrollArea):
-
     def __init__(self, *args, **kwargs):
         QScrollArea.__init__(self, *args, **kwargs)
-  
         self.setWidgetResizable(True)
-  
         content = QWidget(self)
         self.setWidget(content)
-  
-        lay = QVBoxLayout(content)
-  
         self.label = QLabel(content)
-  
+        self.label.setTextInteractionFlags(Qt.TextSelectableByMouse)
         self.label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
-  
-        # making label multi-line
         self.label.setWordWrap(True)
-  
-        # adding label to the layout
-        lay.addWidget(self.label)
-  
-    # the setText method
+
     def setText(self, text):
-        # setting text to the label
         self.label.setText(text)
 
 class History(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
-
+        self.setWindowIcon(QtGui.QIcon('logo.ico'))
         self.setWindowTitle("History")
-
-
-        self.setGeometry(100, 100, 600, 400)
+        self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
+        self.setFixedSize(1000, 750)
         self.UiComponents()
-    
         self.show()
 
     def UiComponents(self):
-        
-        self.text = history
-  
-    
         self.label = ScrollLabel(self)
-  
-        
-        self.label.setText(self.text)
-        self.label.setStyleSheet("font: 20pt;")
-  
-       
-        self.label.setGeometry(0, 0, 600, 400)
-
+        self.label.setText(history)
+        self.label.setStyleSheet("font: 15pt;")
+        self.label.setGeometry(0, 0, 1000, 750)
         self.clear_button = QPushButton('Clear', self)
-        self.clear_button.move(515,370)
+        self.clear_button.setGeometry(0, 0, 100, 50)
+        self.clear_button.move(890,690)
+        font = QtGui.QFont()
+        font.setFamily("Noto Sans")
+        font.setPointSize(15)
+        font.setBold(True)
+        font.setWeight(75)
+        self.clear_button.setFont(font)
+        self.clear_button.setStyleSheet("QPushButton {\n"
+                                        "    border: 2px solid #8f8f91;\n"
+                                        "    border-radius: 6px;\n"
+                                        "    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
+                                        "                                      stop: 0 #B3E5FC, stop: 1 #00AFFF);\n"
+                                        "    min-width: 80px;\n"
+                                        "}\n"
+                                        "\n"
+                                        "QPushButton:pressed {\n"
+                                        "    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
+                                        "                                      stop: 0 #00AFFF, stop: 1#B3E5FC);\n"
+                                        "}\n"
+                                        "\n"
+                                        "QPushButton:flat {\n"
+                                        "    border: none; \n"
+                                        "}\n"
+                                        "\n"
+                                        "QPushButton:default {\n"
+                                        "    border-color: navy; \n"
+                                        "}")
     
         self.clear_button.clicked.connect(self.on_click)
 
