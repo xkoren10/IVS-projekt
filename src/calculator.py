@@ -4,10 +4,10 @@
 # @author: Marek Tiss, xtissm00, PyJaMa's
 # @date: March/April 2021
 
-from PyQt5 import QtWidgets, QtGui
+from PyQt5.QtGui import QIcon, QFont
 from PyQt5.Qt import Qt
 from calcules_Ui import Ui_Calculator
-from PyQt5.QtWidgets import QMessageBox, QDialog, QPushButton, QVBoxLayout, QLabel, QScrollArea, QWidget
+from PyQt5.QtWidgets import QMessageBox, QDialog, QPushButton, QLabel, QScrollArea, QWidget, QMainWindow
 import calc
 import os
 
@@ -15,7 +15,7 @@ import os
 ## @var history
 # Global variable that tracks history of inputs/outputs
 history = ''
-class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
+class CalculatorWindow(QMainWindow, Ui_Calculator):
     ##
     # Variable containing current expression from input
     expression = "0"
@@ -35,7 +35,7 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         ##
         # Setting name and logo of main window
         self.setWindowTitle("Calcules")
-        self.setWindowIcon(QtGui.QIcon('logo.ico'))
+        self.setWindowIcon(QIcon('logo.ico'))
         # Showing 0 at input at the start of app
         self.label_input.setText("0 ")
 
@@ -152,7 +152,6 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
             self.decimal_pressed()
     
 
-
     ##
     # @brief Formating expression and showing it as input
     def show_input(self):
@@ -162,6 +161,28 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         self.label_output.setText("")
         # Reseting equals 0
         self.equals = 0
+
+    ##
+    # @brief Preparing expression for some functions
+    def zero_and_space(self):
+        # Setting expression to 0 if last action was pressing equals
+        if self.equals == 1:
+            self.expression = "0"
+        # Adding space if it's missing for creating list
+        if self.expression[-1] != " ":
+            self.expression = self.expression + " "
+
+    ##
+    # @brief Adds operation to expression
+    # @param add Which operation should be added
+    def add_to_expression(self, add):
+        # If expression is "empty", replaces expression 
+        if self.expression == "0 ":
+            self.expression = add
+        # If expression isn't "empty", adds to the end of expression  
+        else:
+            self.expression = self.expression + add
+
 
     ##
     # @brief Adding digit to input
@@ -185,7 +206,7 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
             for i in range(0, last):
                 new_label = new_label + ' ' + numbers[i]
             self.expression = new_label + ' ' + new_number
-        # Calling function to display input
+        # Displaying input
         self.show_input()
 
     ##
@@ -201,7 +222,7 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         last = len(numbers) - 1
         # Checking if last number exists and doesn't allready have decimal point
         if (numbers[last] != "") and (numbers[last].find('.') == -1):
-            # Adding decimal point and calling function to display input
+            # Adding decimal point and displaying input
             self.expression = self.expression + '.'
             self.show_input()
     
@@ -212,7 +233,7 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         # Adding space if it's missing for creating list
         if self.expression[-1] != " ":
             self.expression = self.expression + " "
-        # Adding function and calling function to display input
+        # Adding function and displaying input
         self.expression = self.expression + funct
         self.show_input()
 
@@ -220,57 +241,36 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
     # @brief Adding parentheses to input
     # @param paren Which parenthesis was pressed
     def paren_pressed(self, paren):
-        # Setting expression to 0 if last action was pressing equals
-        if self.equals == 1:
-            self.expression = "0"
+        # Preparing expression
+        self.zero_and_space()
         # Incrementing counter of used parenthesis
         if funct == "( ":
             self.lparen += 1
         else:
             self.rparen += 1
-        # Adding space if it's missing for creating list
-        if self.expression[-1] != " ":
-            self.expression = self.expression + " "
-        # Creating new expression with parenthesis and calling function to display input
-        if self.expression == "0 ":
-            self.expression = funct
-        else:
-            self.expression = self.expression + paren
+        # Adding parenthesis and displaying input
+        self.add_to_expression(funct)
         self.show_input()
 
     ##
     # @brief Adding root to input
     def root_pressed(self):
-        # Setting expression to 0 if last action was pressing equals
-        if self.equals == 1:
-            self.expression = "0"
-        # Adding space if it's missing for creating list
-        if self.expression[-1] != " ":
-            self.expression = self.expression + " "
-        # Creating new expression with root and calling function to display input
-        if self.expression == "0 ":
-            self.expression = "2√ "
-        else:
-            self.expression = self.expression + "2√ "
+        # Preparing expression
+        self.zero_and_space()
+        # Adding root and displaying input
+        self.add_to_expression("2√ ")
         self.show_input()
     
     ##
     # @brief Adding trigonometric function to input
     # @param funct Which function was pressed
     def trig_pressed(self, funct):
-        # Setting expression to 0 if last action was pressing equals
-        if self.equals == 1:
-            self.expression = "0"
         # Incrementing counter of left parenthesis
         self.lparen += 1
-        # Adding space if it's missing for creating list
-        if self.expression[-1] != " ":
-            self.expression = self.expression + " "
-        # Creating new expression with root and calling function to display input
-        if self.expression == "0 ":
-            self.expression = funct
-        else:
-            self.expression = self.expression + funct
+        # Preparing expression
+        self.zero_and_space()
+        # Adding trigonometric function to and displaying input
+        self.add_to_expression(funct)
         self.show_input()
     ##
     # @brief Reseting state of calculator
@@ -308,7 +308,7 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         # If the resulting expression was blank, adding 0
         if self.expression == '':
             self.expression = "0"
-        # Calling function to display input
+        # Displaying intput
         self.show_input()
 
     ##
@@ -339,7 +339,7 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         msg = QMessageBox()
         # Setting help message look
         msg.setWindowTitle("Help")
-        msg.setWindowIcon(QtGui.QIcon('logo.ico'))
+        msg.setWindowIcon(QIcon('logo.ico'))
         msg.setText("Calcules")
         msg.setIcon(QMessageBox.Information)
         # Adding buttons
@@ -394,13 +394,13 @@ class ScrollLabel(QScrollArea):
     def setText(self, text):
         self.label.setText(text)
 
-class History(QtWidgets.QDialog):
+class History(QDialog):
     ##
     # @brief Initialization of history window
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         # Setting icon and title
-        self.setWindowIcon(QtGui.QIcon('logo.ico'))
+        self.setWindowIcon(QIcon('logo.ico'))
         self.setWindowTitle("History")
         # Allowing text to by be copied
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
@@ -426,7 +426,7 @@ class History(QtWidgets.QDialog):
         self.clear_button.setGeometry(0, 0, 100, 50)
         self.clear_button.move(890,690)
         # Setting style of buttons text
-        font = QtGui.QFont()
+        font = QFont()
         font.setFamily("Noto Sans")
         font.setPointSize(15)
         font.setBold(True)
