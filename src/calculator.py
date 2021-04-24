@@ -6,7 +6,7 @@
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.Qt import Qt
 from calcules_Ui import Ui_Calculator
-from PyQt5.QtWidgets import QMessageBox, QDialog, QPushButton, QLabel, QScrollArea, QWidget, QMainWindow
+from PyQt5.QtWidgets import QVBoxLayout, QMessageBox, QDialog, QPushButton, QLabel, QScrollArea, QWidget, QMainWindow
 import calc
 import os
 
@@ -383,11 +383,12 @@ class ScrollLabel(QScrollArea):
         self.setWidgetResizable(True)
         content = QWidget(self)
         self.setWidget(content)
+        layout = QVBoxLayout(content)
         self.label = QLabel(content)
         self.label.setTextInteractionFlags(Qt.TextSelectableByMouse)
         self.label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
         self.label.setWordWrap(True)
-    
+        layout.addWidget(self.label)
     ##
     # @brief Adding text to scrollable label
     # @param text Text to be added
