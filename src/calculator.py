@@ -1,25 +1,45 @@
+
+## @file: calculator.py
+# @brief: Realization of graphical user interface
+# @author: Marek Tiss, xtissm00, PyJaMa's
+# @date: March/April 2021
+
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.Qt import Qt
 from calcules_Ui import Ui_Calculator
 from PyQt5.QtWidgets import QMessageBox, QDialog, QPushButton, QVBoxLayout, QLabel, QScrollArea, QWidget
 import calc
+import os
 
 
+## @var history
+# Global variable that tracks history of inputs/outputs
 history = ''
 class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
+    ##
+    # Variable containing current expression from input
     expression = "0"
+    # Variables tracking number of used parentheses
     lparen = 0
     rparen = 0
+    # Varible tracking if last action was pressing equals
     equals = 0
 
+    ##
+    # @brief Initialization of main window
     def __init__(self):
         super().__init__()
         self.setupUi(self)
         self.show()
+
+        ##
+        # Setting name and logo of main window
         self.setWindowTitle("Calcules")
         self.setWindowIcon(QtGui.QIcon('logo.ico'))
+        # Showing 0 at input at the start of app
         self.label_input.setText("0 ")
 
+        # Connecting buttons on GUI to the functions
         self.pushButton_0.clicked.connect(lambda: self.digit_pressed("0"))
         self.pushButton_1.clicked.connect(lambda: self.digit_pressed("1"))
         self.pushButton_2.clicked.connect(lambda: self.digit_pressed("2"))
@@ -56,6 +76,8 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         self.pushButton_help.clicked.connect(self.help_window)
         self.pushButton_hist.clicked.connect(self.history_window)
 
+    ##
+    # @brief Connecting keys on keyboard to the functions
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_0:
             self.digit_pressed("0")
@@ -128,144 +150,203 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
         
         elif event.key() == Qt.Key_Period:
             self.decimal_pressed()
-        
+    
 
+
+    ##
+    # @brief Formating expression and showing it as input
     def show_input(self):
+        # Placeing formated expression to display input
         self.label_input.setText(self.expression.replace(' ', '') + ' ')
+        # Making output blank
         self.label_output.setText("")
+        # Reseting equals 0
         self.equals = 0
-        self.error = 0
 
+    ##
+    # @brief Adding digit to input
+    # @param digit Which digit was pressed
     def digit_pressed(self, digit):
+        # Declaration of new blank label
         new_label = ""
+        # Splitting expression by space so the last element is number
         numbers = self.expression.split(' ')
+        # Geting index of last element of numbers
         last = len(numbers) - 1
+        # Checking if new number should replace last or if it should be added
         if numbers[last] == "0" or self.equals == 1:
             new_number = digit
         else:
             new_number = numbers[last] + digit
-
+        # Creating new expression
         if last == 0:
             self.expression = new_number
         else:
             for i in range(0, last):
                 new_label = new_label + ' ' + numbers[i]
             self.expression = new_label + ' ' + new_number
-
+        # Calling function to display input
         self.show_input()
 
+    ##
+    # @brief Adding decimal point to input
     def decimal_pressed(self):
+        # Setting expression to 0 if last action was pressing equals
         if self.equals == 1:
             self.expression = "0"
 
+        # Splitting expression by space so the last element is number
         numbers = self.expression.split(' ')
+        # Geting index of last element of numbers
         last = len(numbers) - 1
+        # Checking if last number exists and doesn't allready have decimal point
         if (numbers[last] != "") and (numbers[last].find('.') == -1):
+            # Adding decimal point and calling function to display input
             self.expression = self.expression + '.'
             self.show_input()
-
+    
+    ##
+    # @brief Adding function to input
+    # @param funct Which function was pressed
     def function_pressed(self, funct):
+        # Adding space if it's missing for creating list
         if self.expression[-1] != " ":
             self.expression = self.expression + " "
+        # Adding function and calling function to display input
         self.expression = self.expression + funct
         self.show_input()
 
-    def paren_pressed(self, funct):
-
+    ##
+    # @brief Adding parentheses to input
+    # @param paren Which parenthesis was pressed
+    def paren_pressed(self, paren):
+        # Setting expression to 0 if last action was pressing equals
         if self.equals == 1:
             self.expression = "0"
-
+        # Incrementing counter of used parenthesis
         if funct == "( ":
             self.lparen += 1
         else:
             self.rparen += 1
-
+        # Adding space if it's missing for creating list
         if self.expression[-1] != " ":
             self.expression = self.expression + " "
-
+        # Creating new expression with parenthesis and calling function to display input
         if self.expression == "0 ":
             self.expression = funct
         else:
-            self.expression = self.expression + funct
+            self.expression = self.expression + paren
         self.show_input()
 
+    ##
+    # @brief Adding root to input
     def root_pressed(self):
+        # Setting expression to 0 if last action was pressing equals
         if self.equals == 1:
             self.expression = "0"
-
+        # Adding space if it's missing for creating list
         if self.expression[-1] != " ":
             self.expression = self.expression + " "
-
+        # Creating new expression with root and calling function to display input
         if self.expression == "0 ":
             self.expression = "2√ "
         else:
             self.expression = self.expression + "2√ "
         self.show_input()
-
+    
+    ##
+    # @brief Adding trigonometric function to input
+    # @param funct Which function was pressed
     def trig_pressed(self, funct):
+        # Setting expression to 0 if last action was pressing equals
         if self.equals == 1:
             self.expression = "0"
-
+        # Incrementing counter of left parenthesis
         self.lparen += 1
+        # Adding space if it's missing for creating list
         if self.expression[-1] != " ":
             self.expression = self.expression + " "
-
+        # Creating new expression with root and calling function to display input
         if self.expression == "0 ":
             self.expression = funct
         else:
             self.expression = self.expression + funct
-
         self.show_input()
-
+    ##
+    # @brief Reseting state of calculator
     def clear_pressed(self):
         self.expression = "0"
         self.rparen = 0
         self.lparen = 0
         self.show_input()
 
+    ##
+    # @brief Deleting last action
     def del_pressed(self):
+        # Splitting expression by space so the last element is number
         numbers = self.expression.split(' ')
+        # Geting index of last element of numbers
         last = len(numbers) - 1
-        if numbers[last - 1] == '(':
+        # Decrementing counter of parenthesis if they were used in last action 
+        if numbers[last - 1].find('(') != -1:
             self.lparen -= 1
         if numbers[last - 1] == ')':
             self.rparen -= 1
+
+        # Checking if last action wasn't adding digit
         if numbers[last] == '':
             self.expression = ''
+            # Adding all but last elements of number
             for i in range(0, last - 1):
                 if self.expression == "":
                     self.expression = numbers[i] + " "
                 else:
                     self.expression = self.expression + numbers[i] + " "
+        # If the last action was adding digit, deleting it
         else:
             self.expression = self.expression[:-1]
+        # If the resulting expression was blank, adding 0
         if self.expression == '':
             self.expression = "0"
+        # Calling function to display input
         self.show_input()
 
-    def equals_pressed(self):
+    ##
+    # @brief Calculating expression and showing result
+    def equals_pressed(self):   
         global history
+        # Checking if correct amounts of parentheses are in the expression
         if self.lparen == self.rparen:
+            # Calling function to evaluate expression
             result = calc.evaluate(self.expression)
+            # Placeing result to display output
             self.label_output.setText(result + " ")
+            # Adding expression and result to history
             history += self.expression.replace(' ', '') + '\n' + result + '\n\n'
+            # Checking if result isn't error
             if result != "Math Error":
+                # Setting result as new expression
                 self.expression = result
                 self.equals = 1
+        # If amounts of parentheses aren't same output is error and history is updated
         else:
             self.label_output.setText("Syntax Error ")
             history += self.expression.replace(' ', '') + '\n' + "Syntax Error"+ '\n\n'
 
+    ##
+    # @brief Displaying help message
     def help_window(self):
         msg = QMessageBox()
+        # Setting help message look
         msg.setWindowTitle("Help")
         msg.setWindowIcon(QtGui.QIcon('logo.ico'))
-        msg.setText("Calcules Manual")
+        msg.setText("Calcules")
         msg.setIcon(QMessageBox.Information)
-        msg.setStandardButtons(QMessageBox.Ok)
+        # Adding buttons
+        msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Open)
         msg.setDefaultButton(QMessageBox.Ok)
         msg.setEscapeButton(QMessageBox.Ok)
-
+        # Setting info
         msg.setInformativeText("Calcules is a simple calculator.\n"
                                "You can press buttons on screen or on your keyboard to provide input.\n"
                                "On keyboard you can use numbers,\n"
@@ -274,16 +355,29 @@ class CalculatorWindow(QtWidgets.QMainWindow, Ui_Calculator):
                                "( ) as parentheses,\n"
                                "Backspace for deleting last input,\n"
                                "C for clearing whole input,\n"
-                               "Enter or = for display the result.\n")
-        msg.setDetailedText("ADD MORE DETAILS")          #TODO
-        msg.exec_()
-    
+                               "Enter or = for display the result.\n\n"
+                               "For more information open manual by clicking open")
+        # Displaying help message
+        returnValue = msg.exec_()
+        # Opening manual if open button was clicked
+        if returnValue == QMessageBox.Open:
+            # Getting path to the current directory
+            dir_path = os.path.dirname(os.path.realpath(__file__))
+            # Changing path to User_manual
+            dir_path = dir_path[:-3]+"User_manual.docx"
+            # Opening User_manual
+            os.startfile(dir_path)
+
+    ##
+    # @brief Displaying history
     def history_window(self):
         his = History()
         his.exec_()
            
 
 class ScrollLabel(QScrollArea):
+    ##
+    # @brief Initialization of scrollable part of history
     def __init__(self, *args, **kwargs):
         QScrollArea.__init__(self, *args, **kwargs)
         self.setWidgetResizable(True)
@@ -293,60 +387,73 @@ class ScrollLabel(QScrollArea):
         self.label.setTextInteractionFlags(Qt.TextSelectableByMouse)
         self.label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
         self.label.setWordWrap(True)
-
+    
+    ##
+    # @brief Adding text to scrollabe label
+    # @param text Text to be added
     def setText(self, text):
         self.label.setText(text)
 
 class History(QtWidgets.QDialog):
+    ##
+    # @brief Initialization of history window
     def __init__(self, parent=None):
         super().__init__(parent=parent)
+        # Setting icon and title
         self.setWindowIcon(QtGui.QIcon('logo.ico'))
         self.setWindowTitle("History")
+        # Allowing text to by be copied
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
         self.setFixedSize(1000, 750)
+        # Calling function to add widgets and showing history window
         self.UiComponents()
         self.show()
-
+    
+    ##
+    # @brief Adding widgets to history window
     def UiComponents(self):
+        # Adding scrollable label
         self.label = ScrollLabel(self)
+        # Adding text from variable history
         self.label.setText(history)
+        # Setting font size
         self.label.setStyleSheet("font: 15pt;")
+        # Setting size of label to fill whole window
         self.label.setGeometry(0, 0, 1000, 750)
+        # Adding button to clear history
         self.clear_button = QPushButton('Clear', self)
+        # Setting size and position of button
         self.clear_button.setGeometry(0, 0, 100, 50)
         self.clear_button.move(890,690)
+        # Setting style of buttons text
         font = QtGui.QFont()
         font.setFamily("Noto Sans")
         font.setPointSize(15)
         font.setBold(True)
         font.setWeight(75)
         self.clear_button.setFont(font)
-        self.clear_button.setStyleSheet("QPushButton {\n"
-                                        "    border: 2px solid #8f8f91;\n"
-                                        "    border-radius: 6px;\n"
-                                        "    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
-                                        "                                      stop: 0 #B3E5FC, stop: 1 #00AFFF);\n"
-                                        "    min-width: 80px;\n"
-                                        "}\n"
-                                        "\n"
-                                        "QPushButton:pressed {\n"
-                                        "    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
-                                        "                                      stop: 0 #00AFFF, stop: 1#B3E5FC);\n"
-                                        "}\n"
-                                        "\n"
-                                        "QPushButton:flat {\n"
-                                        "    border: none; \n"
-                                        "}\n"
-                                        "\n"
-                                        "QPushButton:default {\n"
-                                        "    border-color: navy; \n"
-                                        "}")
-    
-        self.clear_button.clicked.connect(self.on_click)
+        # Setting style of button
+        self.clear_button.setStyleSheet("QPushButton   {border: 2px solid #8f8f91;\n    "
+                                        "               border-radius: 6px;\n"
+                                        "               background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
+                                        "               stop: 0 #B3E5FC, stop: 1 #00AFFF);\n"
+                                        "               min-width: 80px;\n"
+                                        "              }\n"
+                                        "QPushButton:pressed   {background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
+                                        "                       stop: 0 #00AFFF, stop: 1#B3E5FC);\n"
+                                        "                       }\n"
+                                        "QPushButton:flat    { border: none}\n"
+                                        "QPushButton:default { border-color: navy}")
 
-    def on_click(self):
+        # Connecting button to clearing history
+        self.clear_button.clicked.connect(self.clear_history)
+
+    ##
+    # @brief Clearing history of calculator
+    def clear_history(self):
         global history
         history = ''
+        # Displaying clear history
         self.label.setText(history)
         
 
