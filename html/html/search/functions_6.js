@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sub_18',['sub',['../Math__lib_8py.html#a1262fb9375d6fd755074473d1ee9918a',1,'Math_lib']]]
+  ['get_5fpars_114',['get_pars',['../namespacecalc.html#ac5134a12820f13065851aaf138e094bc',1,'calc']]]
 ];

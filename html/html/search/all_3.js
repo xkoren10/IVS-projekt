@@ -1,4 +1,9 @@
 var searchData=
 [
-  ['fact_4',['fact',['../Math__lib_8py.html#a7059dbb776cd9e704a44b6826a129607',1,'Math_lib']]]
+  ['d_5fdigits_14',['d_digits',['../Math__lib_8py.html#a6f0ebaf117f867a9225f27a2b5095d92',1,'Math_lib']]],
+  ['decimal_5fpressed_15',['decimal_pressed',['../classcalculator_1_1CalculatorWindow.html#a23aceb8509efe4cf526d9c8f49c9b6d2',1,'calculator::CalculatorWindow']]],
+  ['defloat_16',['defloat',['../namespacecalc.html#a6f9c266f8b99dc960aa367a43437fa28',1,'calc']]],
+  ['del_5fpressed_17',['del_pressed',['../classcalculator_1_1CalculatorWindow.html#a0059c3c0c7df27b0f9653f70f12bae7c',1,'calculator::CalculatorWindow']]],
+  ['digit_5fpressed_18',['digit_pressed',['../classcalculator_1_1CalculatorWindow.html#a20c1acda78562659e1cfc320015cba06',1,'calculator::CalculatorWindow']]],
+  ['div_19',['div',['../Math__lib_8py.html#ab92622cffa32fd5e7a539568fb612f85',1,'Math_lib']]]
 ];

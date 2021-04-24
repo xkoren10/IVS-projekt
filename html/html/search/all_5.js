@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['pi_7',['pi',['../Math__lib_8py.html#aedf72ed7472fbf8279903ab7dce44704',1,'Math_lib']]],
-  ['pow_8',['pow',['../Math__lib_8py.html#ab9b1780e217ef0b4f1f9f09f2b97f560',1,'Math_lib']]]
+  ['fact_24',['fact',['../Math__lib_8py.html#a7059dbb776cd9e704a44b6826a129607',1,'Math_lib']]],
+  ['findc_25',['findC',['../namespacecalc.html#af37fcecab3aed6a126112c5a430ac04d',1,'calc']]],
+  ['function_5fpressed_26',['function_pressed',['../classcalculator_1_1CalculatorWindow.html#a9804f8af4fa1391ec90ffa0bd383532b',1,'calculator::CalculatorWindow']]]
 ];
