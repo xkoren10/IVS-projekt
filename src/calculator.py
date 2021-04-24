@@ -1,7 +1,7 @@
-## @file: calculator.py
-# @brief: Realization of graphical user interface
-# @author: Marek Tiss, xtissm00, PyJaMa's
-# @date: March/April 2021
+## @file calculator.py
+# @brief Realization of graphical user interface
+# @author Marek Tiss, xtissm00, PyJaMa's
+# @date March/April 2021
 
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.Qt import Qt
@@ -16,14 +16,19 @@ import os
 history = ''
 
 
+##
+# @brief Class of main window
 class CalculatorWindow(QMainWindow, Ui_Calculator):
     ##
     # Variable containing current expression from input
     expression = "0"
     # Variables tracking number of used parentheses
+## lparen
     lparen = 0
+## rparen
     rparen = 0
     # Variable tracking if last action was pressing equals
+## equals
     equals = 0
 
     ##
@@ -167,6 +172,7 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
     def zero_and_space(self):
         # Setting expression to 0 if last action was pressing equals
         if self.equals == 1:
+            ## expression
             self.expression = "0"
         # Adding space if it's missing for creating list
         if self.expression[-1] != " ":
@@ -285,7 +291,7 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
     def del_pressed(self):
         # Splitting expression by space so the last element is number
         numbers = self.expression.split(' ')
-        # Geting index of last element of numbers
+        # Getting index of last element of numbers
         last = len(numbers) - 1
         # Decrementing counter of parenthesis if they were used in last action 
         if numbers[last - 1].find('(') != -1:
@@ -308,7 +314,7 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
         # If the resulting expression was blank, adding 0
         if self.expression == '':
             self.expression = "0"
-        # Displaying intput
+        # Displaying input
         self.show_input()
 
     ##
@@ -319,7 +325,7 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
         if self.lparen == self.rparen:
             # Calling function to evaluate expression
             result = calc.evaluate(self.expression)
-            # Placeing result to display output
+            # Placing result to display output
             self.label_output.setText(result + " ")
             # Adding expression and result to history
             history += self.expression.replace(' ', '') + '\n' + result + '\n\n'
@@ -374,7 +380,8 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
         his = History()
         his.exec_()
            
-
+##
+# @brief Class of scrollable labels
 class ScrollLabel(QScrollArea):
     ##
     # @brief Initialization of scrollable part of history
@@ -384,6 +391,7 @@ class ScrollLabel(QScrollArea):
         content = QWidget(self)
         self.setWidget(content)
         layout = QVBoxLayout(content)
+        ## label
         self.label = QLabel(content)
         self.label.setTextInteractionFlags(Qt.TextSelectableByMouse)
         self.label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
@@ -395,7 +403,8 @@ class ScrollLabel(QScrollArea):
     def setText(self, text):
         self.label.setText(text)
 
-
+##
+# @brief Class of history
 class History(QDialog):
     ##
     # @brief Initialization of history window
@@ -415,6 +424,7 @@ class History(QDialog):
     # @brief Adding widgets to history window
     def UiComponents(self):
         # Adding scrollable label
+        ## label
         self.label = ScrollLabel(self)
         # Adding text from variable history
         self.label.setText(history)
@@ -423,6 +433,7 @@ class History(QDialog):
         # Setting size of label to fill whole window
         self.label.setGeometry(0, 0, 1000, 750)
         # Adding button to clear history
+        ## claer_button
         self.clear_button = QPushButton('Clear', self)
         # Setting size and position of button
         self.clear_button.setGeometry(0, 0, 100, 50)

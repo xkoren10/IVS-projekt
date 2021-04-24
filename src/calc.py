@@ -1,20 +1,20 @@
-"""
-@file: calc.py
-@brief: Processing script for computing the result of input
-@author: Matej Hložek, xhloze02, PyJaMa's
-@date: March/April/May 2021
+"""!
+@file calc.py
+@brief Processing script for computing the result of input
+@author Matej Hložek, xhloze02, PyJaMa's
+@date March/April/May 2021
 """
 import Math_lib as Math     # imports our math library as 'Math' for easier typing
-signs = ["+", "-", "*", "/", "^", "√", "!"]  # global array with sign characters
+##@param signs
+#Global array with sign characters
+signs = ["+", "-", "*", "/", "^", "√", "!"]
 
 
 def get_pars(eq: str):
-    """get_pars
-    @brief: Gets indexes of the largest couple of parentheses
-    @type eq: String
-    @param eq: A string to get indexes from
-    @rtype: List or Error string
-    @return: [index of 1st, index of 2nd] parentheses or Error string"""
+    """!get_pars
+    @brief Gets indexes of the largest couple of parentheses
+    @param eq A string to get indexes from
+    @return [index of 1st, index of 2nd] parentheses or Error string"""
 
     front = 0   # the number of opening parentheses
     end = 0     # the number of closing parentheses
@@ -45,16 +45,12 @@ def get_pars(eq: str):
 
 
 def rewrite(eq: list, index: int, insert):
-    """rewrite
-    @brief: Reconstructs the list with result of calculation
-    @type eq: List
-    @param eq: A list to reconstruct
-    @type index: Integer
-    @param index: Index where should the variable "insert" should be inserted
-    @type insert: String or list
-    @param insert: A variable to be inserted onto desired index
-    @rtype: List
-    @return: A updated list with result of calculation"""
+    """!rewrite
+    @brief Reconstructs the list with result of calculation
+    @param eq A list to reconstruct
+    @param index Index where should the variable "insert" should be inserted (integer)
+    @param insert A variable to be inserted onto desired index
+    @return A updated list with result of calculation"""
 
     ret = eq[:index - 1]        # gets equation from beginning to index-1 and stores it to returning
     ret.append(insert)          # concatenates the inserted variable to returning
@@ -63,12 +59,10 @@ def rewrite(eq: list, index: int, insert):
 
 
 def to_list(eq: str):
-    """to_list
-    @brief: Converts string into list of numbers and operators
-    @type eq: String
-    @param eq: A string to make a list from
-    @rtype: List
-    @return: A list of numbers and operators"""
+    """!to_list
+    @brief Converts string into list of numbers and operators
+    @param eq A string to make a list from
+    @return A list of numbers and operators"""
 
     num = " "       # declaration of number
     final = []      # declaration of final returning list
@@ -94,12 +88,10 @@ def to_list(eq: str):
 
 
 def check_empty(eq: str):
-    """check_neg
-    @brief: Checks if input variable does include empty string or an negative number and repairs it
-    @type eq: String or list
-    @param eq: A iterable variable to be checked
-    @rtype: String or list
-    @return: A repaired (if needed) list without empty strings and wrongly written negative numbers"""
+    """!check_neg
+    @brief Checks if input variable does include empty string or an negative number and repairs it
+    @param eq A iterable variable to be checked (string or list)
+    @return A repaired (if needed) list without empty strings and wrongly written negative numbers"""
 
     i = 0       # iterator index
     for elem in eq:
@@ -122,12 +114,10 @@ def check_empty(eq: str):
 
 
 def type_check(num: str):
-    """type_check
-    @brief: Checks type of input number and coverts it into adequate type
-    @type num: String
-    @param num: A number to convert
-    @rtype: Either float or integer depending on input number
-    @return: A number"""
+    """!type_check
+    @brief Checks type of input number and coverts it into adequate type
+    @param num A number to convert (string)
+    @return A number (either float or integer depending on input number) """
 
     if not num:
         # if number is NULL
@@ -144,12 +134,10 @@ def type_check(num: str):
 
 
 def check_gon(eq):
-    """check_gon
-    @brief: Checks if there are goniometric functions in input variable and calculates them
-    @type eq: List
-    @param eq: A list to check
-    @rtype: List
-    @return: List without goniometric functions"""
+    """!check_gon
+    @brief Checks if there are goniometric functions in input variable and calculates them
+    @param eq A list to check
+    @return List without goniometric functions"""
 
     i = 0   # iterator index
     for elem in eq:
@@ -177,14 +165,11 @@ def check_gon(eq):
 
 
 def findC(eq: str, sign: str):
-    """findC
-    @brief: Finds first occurrence of given variable
-    @type eq: String or list
-    @param eq:  A iterable variable where the character will be searched
-    @type sign: String
-    @param sign: A variable to be searched
-    @rtype: Integer
-    @return: An index of occurrence of character"""
+    """!findC
+    @brief Finds first occurrence of given variable
+    @param eq  A iterable variable where the character will be searched (string or list)
+    @param sign A variable to be searched (string)
+    @return An index of occurrence of character"""
 
     i = 0   # iterator index
     for char in eq:
@@ -194,12 +179,10 @@ def findC(eq: str, sign: str):
 
 
 def defloat(num):
-    """defloat
-    @brief: Check if the number can be retyped to integer
-    @type num: Float or integer
-    @param num: A number to be checked
-    @rtype: String
-    @return: Either unchanged float number or integer number"""
+    """!defloat
+    @brief Check if the number can be retyped to integer
+    @param num A number to be checked (float or integer)
+    @return Either unchanged float number or integer number"""
 
     if type(num) == float:
         # if number is float type
@@ -215,12 +198,10 @@ def defloat(num):
 
 
 def calculate(eq: str):
-    """calculate
-    @brief: The main function to process given equation
-    @type eq: String
-    @param eq: String to calculate
-    @rtype: String
-    @return: A result"""
+    """!calculate
+    @brief The main function to process given equation
+    @param eq String to calculate
+    @return A result"""
 
     try:
         # try looks for any exception, if any is encountered jumps to 'except'
@@ -312,12 +293,10 @@ def calculate(eq: str):
 
 
 def evaluate(eq: str):
-    """evaluate
-    @brief: connecting function for GUI
-    @type eq: string
-    @param eq: String to calculate
-    @rtype: string
-    @return: a result or an error string"""
+    """!evaluate
+    @brief connecting function for GUI
+    @param eq String to calculate
+    @return a result or an error string"""
 
     eq = calculate(eq)          # calls the 'main' function
 

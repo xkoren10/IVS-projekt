@@ -1,7 +1,7 @@
-## @file: Math_lib.py
-# @brief: Implementation of mathematical functions and constants
-# @author: Marek Tiss, xtissm00, PyJaMa's
-# @date: March 2021 
+## @file Math_lib.py
+# @brief Implementation of mathematical functions and constants
+# @author Marek Tiss, xtissm00, PyJaMa's
+# @date March 2021
 
 import math
 
@@ -23,8 +23,8 @@ d_digits = 11
 def add(x, y):
     return x + y
 
-## Substraction
-# @brief Substracts number y from number x (x-y)
+## Subtraction
+# @brief Subtracts number y from number x (x-y)
 # @param x First number
 # @param y Second number
 # @return Difference of x and y
@@ -41,7 +41,7 @@ def mult(x, y):
 
 ## Division
 # @brief Divides number x by number y (x/y)
-# @param x Divident
+# @param x Dividend
 # @param y Divisor
 # @return Quotient of x and y
 # @exception ZeroDivisionError if y = 0
@@ -122,7 +122,7 @@ def tan(x):
 ## Cotangent
 # @brief Calculates cotangent of number x (adjacent/opposite)
 # @param x Number in degrees
-# @return coangent of x
+# @return cotangent of x
 # @exception ValueError if x is 180*I, while I is whole number
 def cotg(x):
     if (x % 180 == 0):

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['d_5fdigits_134',['d_digits',['../Math__lib_8py.html#a6f0ebaf117f867a9225f27a2b5095d92',1,'Math_lib']]]
+  ['clear_5fbutton_192',['clear_button',['../classcalculator_1_1History.html#a880a76ad1078cb89d801dc684814b318',1,'calculator::History']]]
 ];
