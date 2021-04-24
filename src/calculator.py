@@ -1,4 +1,3 @@
-
 ## @file: calculator.py
 # @brief: Realization of graphical user interface
 # @author: Marek Tiss, xtissm00, PyJaMa's
@@ -15,6 +14,8 @@ import os
 ## @var history
 # Global variable that tracks history of inputs/outputs
 history = ''
+
+
 class CalculatorWindow(QMainWindow, Ui_Calculator):
     ##
     # Variable containing current expression from input
@@ -22,7 +23,7 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
     # Variables tracking number of used parentheses
     lparen = 0
     rparen = 0
-    # Varible tracking if last action was pressing equals
+    # Variable tracking if last action was pressing equals
     equals = 0
 
     ##
@@ -150,16 +151,15 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
         
         elif event.key() == Qt.Key_Period:
             self.decimal_pressed()
-    
 
     ##
-    # @brief Formating expression and showing it as input
+    # @brief Formatting expression and showing it as input
     def show_input(self):
-        # Placeing formated expression to display input
+        # Placing formatted expression to display input
         self.label_input.setText(self.expression.replace(' ', '') + ' ')
         # Making output blank
         self.label_output.setText("")
-        # Reseting equals 0
+        # Resetting equals 0
         self.equals = 0
 
     ##
@@ -183,7 +183,6 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
         else:
             self.expression = self.expression + add
 
-
     ##
     # @brief Adding digit to input
     # @param digit Which digit was pressed
@@ -192,7 +191,7 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
         new_label = ""
         # Splitting expression by space so the last element is number
         numbers = self.expression.split(' ')
-        # Geting index of last element of numbers
+        # Getting index of last element of numbers
         last = len(numbers) - 1
         # Checking if new number should replace last or if it should be added
         if numbers[last] == "0" or self.equals == 1:
@@ -218,9 +217,9 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
 
         # Splitting expression by space so the last element is number
         numbers = self.expression.split(' ')
-        # Geting index of last element of numbers
+        # Getting index of last element of numbers
         last = len(numbers) - 1
-        # Checking if last number exists and doesn't allready have decimal point
+        # Checking if last number exists and doesn't already have decimal point
         if (numbers[last] != "") and (numbers[last].find('.') == -1):
             # Adding decimal point and displaying input
             self.expression = self.expression + '.'
@@ -249,7 +248,7 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
         else:
             self.rparen += 1
         # Adding parenthesis and displaying input
-        self.add_to_expression(funct)
+        self.add_to_expression(paren)
         self.show_input()
 
     ##
@@ -272,8 +271,9 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
         # Adding trigonometric function to and displaying input
         self.add_to_expression(funct)
         self.show_input()
+
     ##
-    # @brief Reseting state of calculator
+    # @brief Resetting state of calculator
     def clear_pressed(self):
         self.expression = "0"
         self.rparen = 0
@@ -331,7 +331,7 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
         # If amounts of parentheses aren't same output is error and history is updated
         else:
             self.label_output.setText("Syntax Error ")
-            history += self.expression.replace(' ', '') + '\n' + "Syntax Error"+ '\n\n'
+            history += self.expression.replace(' ', '') + '\n' + "Syntax Error" + '\n\n'
 
     ##
     # @brief Displaying help message
@@ -364,7 +364,7 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
             # Getting path to the current directory
             dir_path = os.path.dirname(os.path.realpath(__file__))
             # Changing path to User_manual
-            dir_path = dir_path[:-3]+"User_manual.docx"
+            dir_path = dir_path[:-3]+"User manual.docx"
             # Opening User_manual
             os.startfile(dir_path)
 
@@ -389,10 +389,11 @@ class ScrollLabel(QScrollArea):
         self.label.setWordWrap(True)
     
     ##
-    # @brief Adding text to scrollabe label
+    # @brief Adding text to scrollable label
     # @param text Text to be added
     def setText(self, text):
         self.label.setText(text)
+
 
 class History(QDialog):
     ##
@@ -424,7 +425,7 @@ class History(QDialog):
         self.clear_button = QPushButton('Clear', self)
         # Setting size and position of button
         self.clear_button.setGeometry(0, 0, 100, 50)
-        self.clear_button.move(890,690)
+        self.clear_button.move(890, 690)
         # Setting style of buttons text
         font = QFont()
         font.setFamily("Noto Sans")
@@ -455,5 +456,3 @@ class History(QDialog):
         history = ''
         # Displaying clear history
         self.label.setText(history)
-        
-
