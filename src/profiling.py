@@ -67,7 +67,6 @@ else:
     with open("test.txt", "w") as file:
         file.write(sys.stdin.read())
         file.close()
-    path = 'test.txt'
-
+        deviation('test.txt')
     """cProfile.run('deviation(path)')"""
-deviation(path)
+
