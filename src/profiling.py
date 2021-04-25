@@ -10,7 +10,7 @@
 import Math_lib
 from random import random
 import sys
-import cProfile
+"""import cProfile"""
 
 
 def generate_random_numbers(number):
@@ -61,13 +61,13 @@ def deviation(path):
 
 if sys.stdin.isatty():
     generate_random_numbers(1000)
-    cProfile.run('deviation("rng1000.txt")')
-    """deviation("rng1000.txt")"""
+    """cProfile.run('deviation("rng1000.txt")')"""
+    deviation("rng1000.txt")
 else:
     with open("test.txt", "w") as file:
         file.write(sys.stdin.read())
         file.close()
     path = 'test.txt'
 
-    cProfile.run('deviation(path)')
-"""deviation(path)"""
+    """cProfile.run('deviation(path)')"""
+deviation(path)
