@@ -153,13 +153,13 @@ def check_gon(eq):
                 # cosine
                 num = float(elem[3:])               # retypes the number to float
                 eq[i] = defloat(Math.cos(num))      # solves the cosine and returns the solution
-            elif "tan" in elem:
+            elif "tan" in elem and "co" not in elem:
                 # tangent
                 num = float(elem[3:])               # retypes the number to float
                 eq[i] = defloat(Math.tan(num))      # solves the tangent and returns the solution
-            elif "cotg" in elem:
+            elif "cotan" in elem:
                 # cotangent
-                num = float(elem[4:])               # retypes the number to float
+                num = float(elem[5:])               # retypes the number to float
                 eq[i] = defloat(Math.cotg(num))     # solves the cotangent and returns the solution
         i += 1
     return eq   # returns equation with solved goniometric functions

@@ -91,7 +91,7 @@ class TestGoniometric(unittest.TestCase):
 
     def testCotangent(self):
         """!@brief Test for the cotangent value of a given number (in degrees)"""
-        self.assertEqual(calc.evaluate("cotg(45)"), "1")
+        self.assertEqual(calc.evaluate("cotan(45)"), "1")
         test_ok("Cotangent")
 
 
@@ -157,7 +157,7 @@ class TestErrors(unittest.TestCase):
         self.assertEqual(calc.evaluate("-5!"), "Math Error")
         self.assertEqual(calc.evaluate("4.5!"), "Math Error")
         self.assertEqual(calc.evaluate("tan(90)"), "Math Error")
-        self.assertEqual(calc.evaluate("cotg(0)"), "Math Error")
+        self.assertEqual(calc.evaluate("cotan(0)"), "Math Error")
         self.assertEqual(calc.evaluate("5+(5+(5)"), "Math Error")
 
         test_ok("Error handling")
