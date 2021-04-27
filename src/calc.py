@@ -5,6 +5,7 @@
 @date March/April/May 2021
 """
 import Math_lib as Math     # imports our math library as 'Math' for easier typing
+import math as pymath
 ##@param signs
 #Global array with sign characters
 signs = ["+", "-", "*", "/", "^", "√", "!"]
@@ -303,6 +304,10 @@ def evaluate(eq: str):
     if "error" == eq:
         # if any error occurred during the calculations returns error string
         return "Math Error"
+
+    if pymath.isinf(float(eq)):
+        # if number is represented as infinity returns error string
+        return "Result too long"
 
     eq = str(defloat(float(eq)))     # checks if the value can be changed from float to integer
     return eq                   # returns the final solution
