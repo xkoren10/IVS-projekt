@@ -249,7 +249,7 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
         # Preparing expression
         self.zero_and_space()
         # Incrementing counter of used parenthesis
-        if funct == "( ":
+        if paren == "( ":
             self.lparen += 1
         else:
             self.rparen += 1
@@ -330,7 +330,7 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
             # Adding expression and result to history
             history += self.expression.replace(' ', '') + '\n' + result + '\n\n'
             # Checking if result isn't error
-            if result != "Math Error":
+            if result != "Math Error" and result != "Result too long":
                 # Setting result as new expression
                 self.expression = result
                 self.equals = 1
