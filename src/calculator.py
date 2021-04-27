@@ -370,7 +370,7 @@ class CalculatorWindow(QMainWindow, Ui_Calculator):
             # Getting path to the current directory
             dir_path = os.path.dirname(os.path.realpath(__file__))
             # Changing path to User_manual
-            dir_path = dir_path[:-3]+"User manual.docx"
+            dir_path = dir_path[:-3]+"User manual.pdf"
             # Opening User_manual
             os.startfile(dir_path)
 
