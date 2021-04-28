@@ -30,6 +30,6 @@ GNU General Public Licence
 
 ## Download:
 
-Version 1.2 available here:
+Version 1.1 available here:
 https://drive.google.com/file/d/1-pX3YnmUjhJSVMOgHaD32CQlmmYpaU07/view?usp=sharing
 
