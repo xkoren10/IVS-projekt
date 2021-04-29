@@ -1,4 +1,4 @@
-xkoren10 100 (profiling, dokumentácia, debugging)
-xhloze02 100 (hlavný kód, inštalátor a odinštalátor)
+xkoren10 100 (profiling, dokumentácia, inštalátor a odinštalátor)
+xhloze02 100 (hlavný kód, debugging, testy)
 xtissm00 100 (knižnica, GUI, mockups, testy)
 
