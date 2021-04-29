@@ -34,9 +34,9 @@ pack:
 	cp "calcules_Ui.py"  ../../pack
 	cp ../"User manual.pdf" ../../pack
 	cp ../"hodnoceni.txt" ../../pack
-	echo Odovzdanie: `date +'%y.%m.%d %H:%M:%S'` - Archív obsahuje zdrojové súbory, použivateľskú príručku a hodnotenie. > ../../pack/odevzdani.txt
-	cd ../..pack ; zip -r xkoren10_xhloze02_xtissm00.zip *
-	cp "xkoren10_xhloze02_xtissm00.zip"  ../../
+	echo `date +'%y.%m.%d %H:%M:%S'` > ../../pack/odevzdani.txt
+	cd ../../pack ; zip -r xkoren10_xhloze02_xtissm00.zip *
+	cp "../../pack/xkoren10_xhloze02_xtissm00.zip"  ../../
 	rm -f "xkoren10_xhloze02_xtissm00.zip"
 	rm -r ../../pack
 
